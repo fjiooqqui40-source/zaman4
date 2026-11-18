@@ -1,0 +1,1572 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><title>ANIME MATH ARENA: SHONEN CLIMAX</title><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Chivo:ital,wght@0,400;0,700;1,400;1,700&amp;family=JetBrains+Mono:wght@400;500;600;700&amp;family=Space+Grotesk:wght@600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base { html, body { margin: 0; padding: 0; } body { overscroll-behavior: none; } main > :first-child { margin-top: 0 !important; } main > :last-child { margin-bottom: 0 !important; } } ::-webkit-scrollbar { display: none; }
+@keyframes orbFloat1 { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-6px); } }
+@keyframes orbFloat2 { 0%, 100% { transform: translateY(-5px); } 50% { transform: translateY(2px); } }
+@keyframes slashFx { 0% { opacity: 0; transform: scale(0.6) rotate(-15deg); } 50% { opacity: 1; transform: scale(1.1) rotate(0deg); } 100% { opacity: 0; transform: scale(1.2) rotate(10deg); } }
+@keyframes shakeScreen { 0%, 100% { transform: translate(0, 0); } 20% { transform: translate(-10px, 8px); } 40% { transform: translate(12px, -8px); } 60% { transform: translate(-8px, -6px); } 80% { transform: translate(8px, 6px); } }
+@keyframes heavyRumble { 0%, 100% { transform: translate(0, 0) rotate(0deg); } 15% { transform: translate(-16px, 12px) rotate(-1.5deg); } 30% { transform: translate(18px, -14px) rotate(1.5deg); } 45% { transform: translate(-14px, -10px) rotate(-1deg); } 65% { transform: translate(14px, 10px) rotate(1deg); } 85% { transform: translate(-6px, 4px) rotate(-0.5deg); } }
+.shake-anim { animation: shakeScreen 0.45s cubic-bezier(.36,.07,.19,.97) both; }
+.rumble-anim { animation: heavyRumble 0.75s cubic-bezier(.36,.07,.19,.97) both; }
+.orb-float-a { animation: orbFloat1 3s ease-in-out infinite; }
+.orb-float-b { animation: orbFloat2 3.4s ease-in-out infinite; }
+.slash-active { animation: slashFx 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+
+/* Dynamic Boss Attack Animations */
+@keyframes waterSlashWave {
+  0% { transform: translateX(-120%) translateY(40%) rotate(-35deg) scaleY(0.2); opacity: 0; filter: blur(6px); }
+  25% { opacity: 1; filter: blur(0px); }
+  50% { transform: translateX(0%) translateY(0%) rotate(-25deg) scaleY(1.4); opacity: 1; filter: drop-shadow(0 0 45px #00f0ff); }
+  100% { transform: translateX(130%) translateY(-40%) rotate(-18deg) scaleY(0.4); opacity: 0; filter: blur(10px); }
+}
+@keyframes waterRipples {
+  0% { transform: scale(0.4); opacity: 1; }
+  100% { transform: scale(2.6); opacity: 0; }
+}
+@keyframes waterFlashFade {
+  0% { opacity: 0; }
+  20% { opacity: 0.85; }
+  100% { opacity: 0; }
+}
+.water-slash-stroke { animation: waterSlashWave 0.75s cubic-bezier(0.1, 0.9, 0.2, 1) forwards; }
+.water-ripple-ring { animation: waterRipples 0.8s ease-out forwards; }
+.water-flash-overlay { animation: waterFlashFade 0.65s ease-out forwards; }
+
+@keyframes fugaArrowShoot {
+  0% { transform: translateX(-80%) scaleX(0.2) scaleY(0.4); opacity: 0; }
+  30% { transform: translateX(-10%) scaleX(1.3) scaleY(1.1); opacity: 1; }
+  60% { transform: translateX(30%) scaleX(2.0) scaleY(1.5); opacity: 1; filter: drop-shadow(0 0 50px #ff381e); }
+  100% { transform: translateX(110%) scaleX(0.5) scaleY(0.2); opacity: 0; }
+}
+@keyframes fugaExplosion {
+  0% { transform: scale(0.1); opacity: 0.95; filter: brightness(2.5); }
+  35% { transform: scale(1.35); opacity: 1; filter: brightness(1.8) drop-shadow(0 0 60px #ff1e00); }
+  70% { transform: scale(1.6); opacity: 0.8; filter: brightness(1.2); }
+  100% { transform: scale(2.0); opacity: 0; filter: blur(12px); }
+}
+@keyframes fireEmberFly {
+  0% { transform: translate(0, 0) scale(1); opacity: 1; }
+  100% { transform: translate(var(--tx), var(--ty)) scale(0); opacity: 0; }
+}
+.fuga-arrow-stroke { animation: fugaArrowShoot 0.7s cubic-bezier(0.15, 0.85, 0.25, 1) forwards; }
+.fuga-fire-burst { animation: fugaExplosion 0.95s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+
+@keyframes akazaCompassRing {
+  0% { transform: scale(0.2) rotate(0deg); opacity: 1; }
+  50% { transform: scale(1.2) rotate(180deg); opacity: 0.9; }
+  100% { transform: scale(2.4) rotate(360deg); opacity: 0; }
+}
+@keyframes akazaNeedleShock {
+  0% { transform: scale(0.5); opacity: 0; }
+  30% { transform: scale(1.1); opacity: 1; filter: drop-shadow(0 0 35px #ffafd0); }
+  100% { transform: scale(1.5); opacity: 0; }
+}
+.akaza-compass-anim { animation: akazaCompassRing 0.85s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
+.akaza-shock-anim { animation: akazaNeedleShock 0.75s ease-out forwards; }
+
+@keyframes bannerCutIn {
+  0% { transform: translateX(-100%) skewX(-20deg); opacity: 0; }
+  20% { transform: translateX(0%) skewX(-12deg); opacity: 1; }
+  75% { transform: translateX(0%) skewX(-12deg); opacity: 1; }
+  100% { transform: translateX(110%) skewX(-20deg); opacity: 0; }
+}
+.banner-cutin-active { animation: bannerCutIn 1.1s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+</style><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "on-surface": "#e2e2e9", "on-secondary-container": "#ffece9", "on-error-container": "#ffdad6", "surface-container-highest": "#33353a", "on-primary": "#00363a", "surface-dim": "#111318", "error-container": "#93000a", "tertiary-fixed": "#ffd8e6", "inverse-primary": "#006970", "surface-container-lowest": "#0c0e13", "primary-fixed-dim": "#00dbe9", "surface": "#111318", "surface-bright": "#37393f", "secondary-fixed-dim": "#ffb4a6", "on-secondary-fixed-variant": "#900c00", "inverse-surface": "#e2e2e9", "inverse-on-surface": "#2e3036", "surface-variant": "#33353a", "on-secondary-fixed": "#400200", "primary": "#dbfcff", "tertiary-fixed-dim": "#ffafd0", "on-tertiary": "#63003d", "tertiary": "#fff3f5", "surface-container": "#1e1f25", "surface-tint": "#00dbe9", "on-surface-variant": "#b9cacb", "secondary-fixed": "#ffdad4", "on-error": "#690005", "on-primary-container": "#006970", "secondary-container": "#d81700", "on-secondary": "#670600", "on-tertiary-fixed-variant": "#8c0058", "on-tertiary-fixed": "#3d0024", "surface-container-high": "#282a2f", "primary-fixed": "#7df4ff", "on-primary-fixed": "#002022", "error": "#ffb4ab", "outline": "#849495", "primary-container": "#00f0ff", "outline-variant": "#3b494b", "on-background": "#e2e2e9", "on-primary-fixed-variant": "#004f54", "secondary": "#ffb4a6", "background": "#111318", "tertiary-container": "#ffccdf", "on-tertiary-container": "#b70075", "surface-container-low": "#1a1b21" }, "borderRadius": { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" }, "spacing": { "space-lg": "1.25rem", "gutter": "1rem", "space-xs": "0.25rem", "space-sm": "0.5rem", "space-md": "0.75rem", "margin": "2rem", "margin-mobile": "1rem", "space-xl": "2rem", "gutter-mobile": "0.75rem" }, "fontFamily": { "headline-md": [ "Space Grotesk" ], "label-hud": [ "JetBrains Mono" ], "label-combo": [ "Space Grotesk" ], "body-md": [ "Chivo" ], "headline-lg": [ "Space Grotesk" ], "body-lg": [ "Chivo" ], "display-hero-mobile": [ "Space Grotesk" ], "title-sm": [ "Chivo" ], "headline-lg-mobile": [ "Space Grotesk" ], "display-hero": [ "Space Grotesk" ], "label-micro": [ "JetBrains Mono" ] }, "fontSize": { "headline-md": [ "22px", { "lineHeight": "28px", "fontWeight": "600" } ], "label-hud": [ "12px", { "lineHeight": "16px", "letterSpacing": "0.08em", "fontWeight": "600" } ], "label-combo": [ "28px", { "lineHeight": "30px", "letterSpacing": "0.06em", "fontWeight": "700" } ], "body-md": [ "14px", { "lineHeight": "20px", "fontWeight": "400" } ], "headline-lg": [ "32px", { "lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "700" } ], "body-lg": [ "16px", { "lineHeight": "24px", "fontWeight": "400" } ], "display-hero-mobile": [ "38px", { "lineHeight": "42px", "letterSpacing": "-0.03em", "fontWeight": "700" } ], "title-sm": [ "16px", { "lineHeight": "22px", "letterSpacing": "0.02em", "fontWeight": "700" } ], "headline-lg-mobile": [ "26px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "700" } ], "display-hero": [ "56px", { "lineHeight": "60px", "letterSpacing": "-0.04em", "fontWeight": "700" } ], "label-micro": [ "10px", { "lineHeight": "12px", "letterSpacing": "0.1em", "fontWeight": "500" } ] } } } };</script></head><body class="bg-surface font-body-md text-body-md text-on-surface min-h-screen selection:bg-primary-container selection:text-on-primary transition-all duration-100 relative overflow-x-hidden" id="battle-body">
+<!-- FULL-SCREEN ARENA BOSS ATTACK CINEMATIC OVERLAY CONTAINER -->
+<div class="pointer-events-none fixed inset-0 z-40 overflow-hidden hidden" id="boss-cinematic-stage">
+<!-- Dynamic Color Flash Screen -->
+<div class="absolute inset-0 opacity-0 transition-opacity pointer-events-none" id="arena-flash-screen"></div>
+<!-- Anime Cut-in Attack Banner -->
+<div class="absolute top-1/4 left-0 right-0 z-50 flex items-center justify-center pointer-events-none">
+<div class="opacity-0 max-w-4xl w-full mx-4 px-8 py-4 shadow-2xl relative border-y-4 flex items-center justify-between" id="attack-cutin-banner">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[36px]" id="cutin-icon">cyclone</span>
+<div>
+<div class="font-label-micro text-label-micro tracking-widest uppercase font-bold" id="cutin-subtitle">SPECIAL TECHNIQUE TRIGGERED</div>
+<div class="font-display-hero text-2xl md:text-4xl uppercase tracking-wider font-extrabold italic" id="cutin-title">⚔️ วารีสะบั้น! // WATER SLASH</div>
+</div>
+</div>
+<div class="hidden sm:flex flex-col items-end">
+<span class="font-label-hud text-label-hud font-bold px-2 py-0.5 rounded uppercase" id="cutin-badge">FATAL STRIKE</span>
+<span class="font-label-micro text-label-micro opacity-80 mt-1 uppercase" id="cutin-caster">CASTER: RIMURU TEMPEST</span>
+</div>
+</div>
+</div>
+<!-- Attack FX Layer Canvas / Elements -->
+<div class="absolute inset-0 w-full h-full flex items-center justify-center pointer-events-none" id="boss-fx-layer">
+<!-- WATER SLASH (Rimuru) -->
+<div class="absolute inset-0 flex items-center justify-center hidden" id="water-slash-container">
+<div class="absolute w-[180vw] h-28 bg-gradient-to-r from-transparent via-primary-container to-transparent blur-xs opacity-90 water-slash-stroke shadow-[0_0_80px_#00f0ff,0_0_120px_#00dbe9]"></div>
+<div class="absolute w-[160vw] h-8 bg-white opacity-95 water-slash-stroke shadow-[0_0_50px_#dbfcff]"></div>
+<div class="w-72 h-72 rounded-full border-4 border-primary-container/80 water-ripple-ring absolute"></div>
+<div class="w-96 h-96 rounded-full border-2 border-primary-fixed water-ripple-ring absolute" style="animation-delay: 0.15s;"></div>
+<div class="w-[500px] h-[500px] rounded-full border border-primary-container/40 water-ripple-ring absolute" style="animation-delay: 0.3s;"></div>
+</div>
+<!-- FŪGA FIRE ARROW / BURST (Sukuna) -->
+<div class="absolute inset-0 flex items-center justify-center hidden" id="fuga-flame-container">
+<!-- Flaming Energy Arrow Shot -->
+<div class="absolute w-[160vw] h-20 bg-gradient-to-r from-amber-400 via-secondary-container to-red-600 blur-sm fuga-arrow-stroke shadow-[0_0_90px_#ff381e,0_0_140px_#d81700]"></div>
+<div class="absolute w-[140vw] h-6 bg-white opacity-95 fuga-arrow-stroke shadow-[0_0_40px_#ffdad4]"></div>
+<!-- Core Hellfire Blast -->
+<div class="w-96 h-96 rounded-full bg-gradient-to-r from-amber-500 via-secondary-container to-red-700 fuga-fire-burst absolute shadow-[0_0_100px_#ff2400]"></div>
+<div class="w-72 h-72 rounded-full bg-white opacity-80 fuga-fire-burst absolute"></div>
+<!-- Flying Ember Emits -->
+<div class="absolute inset-0 overflow-hidden pointer-events-none" id="fuga-embers-box"></div>
+</div>
+<!-- COMPASS NEEDLE DESTRUCTIVE SHOCKWAVE (Akaza) -->
+<div class="absolute inset-0 flex items-center justify-center hidden" id="akaza-shock-container">
+<!-- 12-Point Martial Compass Ring -->
+<div class="w-[580px] h-[580px] rounded-full border-4 border-dashed border-tertiary-container/80 akaza-compass-anim absolute shadow-[0_0_60px_#ffafd0]"></div>
+<div class="w-80 h-80 rounded-full border-8 border-on-tertiary-container/90 akaza-shock-anim absolute"></div>
+<!-- Cross Star Shockwave -->
+<div class="w-[140vw] h-10 bg-gradient-to-r from-transparent via-on-tertiary-container to-transparent rotate-45 akaza-shock-anim absolute shadow-[0_0_50px_#b70075]"></div>
+<div class="w-[140vw] h-10 bg-gradient-to-r from-transparent via-on-tertiary-container to-transparent -rotate-45 akaza-shock-anim absolute shadow-[0_0_50px_#b70075]"></div>
+</div>
+</div>
+</div>
+<header class="fixed top-0 left-0 right-0 z-50 bg-surface-container-lowest/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-20 max-w-7xl mx-auto px-6 flex items-center justify-between gap-gutter"><div class="flex items-center gap-space-md"><div class="flex flex-col"><div class="flex items-center gap-space-sm"><span class="font-headline-md text-headline-md tracking-tight uppercase text-primary-container">MATH CLIMAX</span><span class="text-outline-variant font-label-micro text-label-micro">//</span><span class="font-title-sm text-title-sm text-on-surface">ศึกคำนวณอนิเมะ</span></div><div class="flex items-center gap-space-xs mt-0.5"><span class="inline-flex items-center px-space-xs py-0.5 rounded-DEFAULT bg-primary-container text-on-primary-container font-label-micro text-label-micro shadow-[0_0_12px_rgba(0,240,255,0.4)]">SEASONS 04 LIVE</span><span class="font-label-micro text-label-micro text-on-surface-variant tracking-widest uppercase">BATTLE HUD v4.8</span></div></div></div><nav class="hidden xl:flex items-center gap-space-sm" data-active-classes="bg-surface-container-high text-primary-container font-headline-md rounded-lg"><a aria-current="page" class="px-space-md py-space-xs transition-colors bg-surface-container-high text-primary-container font-headline-md rounded-lg" data-path="arena" href="#">สมรภูมิต่อสู้ (Arena)</a><a class="px-space-md py-space-xs rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-headline-md text-headline-md" data-path="leaderboard" href="#">จัดอันดับ (Leaderboard)</a><a class="px-space-md py-space-xs rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-headline-md text-headline-md" data-path="player-stats" href="#">สถิติผู้เล่น (Player Stats)</a><a class="px-space-md py-space-xs rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-headline-md text-headline-md" data-path="boss-codex" href="#">คัมภีร์บอส (Boss Codex)</a></nav><div class="flex items-center gap-space-md"><div class="hidden md:flex flex-col items-end gap-1"><div class="flex items-center gap-space-xs"><span class="px-1.5 py-0.5 rounded-DEFAULT bg-secondary-container text-on-secondary-container font-label-micro text-label-micro uppercase font-bold" id="header-score-pill">SCORE: 0</span><span class="font-label-hud text-label-hud uppercase text-primary">MATH-BLADE</span></div><div class="flex items-center gap-space-xs"><div class="w-28 h-2 rounded-DEFAULT bg-surface-container-high overflow-hidden"><div class="h-full bg-primary-container shadow-[0_0_10px_#00f0ff] transition-all duration-300" id="header-xp-bar" style="width: 25%;"></div></div><span class="font-label-micro text-label-micro text-on-surface-variant" id="header-xp-text">250/1000</span></div></div><div class="flex items-center gap-space-xs"><button aria-label="Toggle Audio FX" class="w-9 h-9 rounded-lg bg-surface-container-high hover:bg-surface-bright flex items-center justify-center text-on-surface-variant hover:text-on-surface transition-colors" onclick="toggleAudio()" type="button"><span class="material-symbols-outlined text-[18px]" id="header-audio-icon">volume_up</span></button><button aria-label="Fullscreen" class="w-9 h-9 rounded-lg bg-surface-container-high hover:bg-surface-bright flex items-center justify-center text-on-surface-variant hover:text-on-surface transition-colors" onclick="toggleFullscreen()" type="button"><span class="material-symbols-outlined text-[18px]">fullscreen</span></button></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shadow-[0_0_12px_rgba(0,240,255,0.3)]"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-20 bg-surface min-h-[calc(100vh-140px)] relative"><div class="max-w-7xl mx-auto px-6 py-6"><div class="flex flex-col w-full">
+<!-- Mode Switcher & Difficulty Ribbon -->
+<section class="w-full mb-6">
+<div class="bg-surface-container-low rounded-lg p-space-md shadow-xl flex flex-col xl:flex-row items-stretch xl:items-center justify-between gap-space-md border border-outline-variant/30">
+<!-- Title & Mode Status -->
+<div class="flex items-center gap-space-md">
+<div class="w-10 h-10 rounded-DEFAULT bg-primary-container flex items-center justify-center text-on-primary-container shadow-[0_0_16px_rgba(0,240,255,0.4)]">
+<span class="material-symbols-outlined text-[24px]">swords</span>
+</div>
+<div>
+<div class="flex items-center gap-space-xs">
+<span class="font-headline-md text-headline-md text-on-surface uppercase tracking-wide">เลือกระดับความยากสมรภูมิ</span>
+<span class="font-label-micro text-label-micro text-primary-container bg-surface-container-highest px-2 py-0.5 rounded-DEFAULT" id="active-difficulty-tag">EASY TARGET ACTIVE</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant" id="difficulty-description">ริมุรุ: บวก-ลบ 2 หลัก // เวลา 10 วินาที // สเปลคูลดาวน์ 1.0 วินาที</p>
+</div>
+</div>
+<!-- Difficulty Tabs -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-sm" id="difficulty-selector">
+<!-- EASY: Rimuru -->
+<button class="difficulty-tab active group relative text-left p-space-md rounded-lg bg-surface-container-high border border-primary-container/40 hover:bg-surface-bright transition-all duration-300 shadow-md cursor-pointer" id="btn-rimuru" onclick="switchBoss('rimuru')" type="button">
+<div class="flex items-start justify-between">
+<span class="font-label-micro text-label-micro font-bold text-primary-container tracking-wider uppercase">ระดับ: ง่าย (EASY)</span>
+<span class="inline-block w-2 h-2 rounded-full bg-primary-container shadow-[0_0_8px_#00f0ff]"></span>
+</div>
+<div class="mt-1 font-title-sm text-title-sm text-on-surface font-bold">ริมุรุ เทมเพสต์</div>
+<div class="flex items-center justify-between mt-2 text-on-surface-variant">
+<span class="font-label-hud text-label-hud text-primary-fixed-dim">วารีเวท Water Slash</span>
+<span class="font-label-micro text-label-micro text-outline font-bold">10s LIMIT / CD 1.0s</span>
+</div>
+<div class="active-indicator h-1 w-full bg-primary-container mt-2 rounded-DEFAULT shadow-[0_0_8px_#00f0ff]"></div>
+</button>
+<!-- MEDIUM: Sukuna -->
+<button class="difficulty-tab group relative text-left p-space-md rounded-lg bg-surface-container border border-transparent hover:bg-surface-bright transition-all duration-300 opacity-80 hover:opacity-100 shadow-sm cursor-pointer" id="btn-sukuna" onclick="switchBoss('sukuna')" type="button">
+<div class="flex items-start justify-between">
+<span class="font-label-micro text-label-micro font-bold text-secondary-fixed-dim tracking-wider uppercase">ระดับ: ปานกลาง (MEDIUM)</span>
+<span class="inline-block w-2 h-2 rounded-full bg-secondary-container shadow-[0_0_8px_#ff381e]"></span>
+</div>
+<div class="mt-1 font-title-sm text-title-sm text-on-surface font-bold">เรียวเมน สุคุนะ</div>
+<div class="flex items-center justify-between mt-2 text-on-surface-variant">
+<span class="font-label-hud text-label-hud text-secondary">เตาหลอมอัคคี "ฟูกะ"</span>
+<span class="font-label-micro text-label-micro text-outline font-bold">8s LIMIT / CD 1.0s</span>
+</div>
+<div class="active-indicator hidden h-1 w-full bg-secondary-container mt-2 rounded-DEFAULT shadow-[0_0_8px_#ff381e]"></div>
+</button>
+<!-- HARD: Akaza -->
+<button class="difficulty-tab group relative text-left p-space-md rounded-lg bg-surface-container border border-transparent hover:bg-surface-bright transition-all duration-300 opacity-80 hover:opacity-100 shadow-sm cursor-pointer" id="btn-akaza" onclick="switchBoss('akaza')" type="button">
+<div class="flex items-start justify-between">
+<span class="font-label-micro text-label-micro font-bold text-tertiary-fixed-dim tracking-wider uppercase">ระดับ: นรกแตก (HARD)</span>
+<span class="inline-block w-2 h-2 rounded-full bg-on-tertiary-container shadow-[0_0_8px_#ffccdf]"></span>
+</div>
+<div class="mt-1 font-title-sm text-title-sm text-on-surface font-bold">อาคาสะ (Akaza)</div>
+<div class="flex items-center justify-between mt-2 text-on-surface-variant">
+<span class="font-label-hud text-label-hud text-tertiary-fixed">เข็มทิศทำลายล้าง</span>
+<span class="font-label-micro text-label-micro text-outline font-bold">5s LIMIT / CD 1.0s</span>
+</div>
+<div class="active-indicator hidden h-1 w-full bg-tertiary-container mt-2 rounded-DEFAULT shadow-[0_0_8px_#ffafd0]"></div>
+</button>
+</div>
+</div>
+</section>
+<!-- 3-Column Split Battle Theater -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-md items-start">
+<!-- LEFT COLUMN: Boss Card & Battle Stance (4 Cols) -->
+<div class="lg:col-span-4 flex flex-col gap-space-md">
+<div class="bg-surface-container-low rounded-lg p-space-lg shadow-xl relative overflow-hidden border border-outline-variant/30">
+<!-- Background Energy Aura Accents -->
+<div class="absolute -top-16 -left-16 w-56 h-56 rounded-full bg-primary-container/10 blur-3xl pointer-events-none transition-colors duration-500" id="boss-glow-bg"></div>
+<div class="absolute top-2 right-3 font-label-micro text-label-micro text-outline tracking-widest uppercase" id="boss-codex-id">TACTICAL ENEMY CODEX // 01</div>
+<!-- Boss Profile Header -->
+<div class="flex items-center gap-space-md mt-2">
+<!-- Boss Avatar -->
+<div class="relative group">
+<div class="w-24 h-24 rounded-lg bg-surface-container-high p-1 shadow-[0_0_24px_rgba(0,240,255,0.3)] transition-all duration-500" id="boss-avatar-frame">
+<img class="w-full h-full object-cover rounded-DEFAULT transition-transform duration-300" data-alt="Anime style tactical portrait of Rimuru Tempest from That Time I Got Reincarnated as a Slime, shimmering cyan anime hair, glowing golden eyes, confident shonen battle smirk, dramatic cinematic lighting, deep graphite background, floating water sparks" id="boss-avatar-img" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAgBzLD4RUSDN220dlfbaryYr9qhH9F-OUz7ULsUCNUCMIMt9aDxY-_UnMB8ZYwMMpBVRpIHk8WWe8hVT4SAI59jFXQwT7p1tqZcBt51q6ZuERKPWQlz67_Euk32OLpeAqfDXgz3JYJYHuchNLuE75zc6uz5SLVTPAFr5GjwtvVxdtKnh2D7R97AAPUZcIFeNefTmK3x18gEQwpHJg_Fla_Z61xhwewW57dVTE-nkSa"/>
+</div>
+<div class="absolute -bottom-2 -right-1 px-1.5 py-0.5 rounded-DEFAULT bg-primary-container text-on-primary-container font-label-micro text-label-micro font-bold shadow-[0_0_10px_#00f0ff]" id="boss-badge">
+              THREAT: S
+            </div>
+</div>
+<!-- Boss Info -->
+<div class="flex-1 min-w-0">
+<div class="flex items-center gap-1">
+<span class="font-label-micro text-label-micro text-primary-fixed uppercase tracking-widest" id="boss-epithet">SLIME ARCHON</span>
+<span class="text-outline-variant font-label-micro text-label-micro">•</span>
+<span class="font-label-micro text-label-micro text-on-surface-variant font-bold" id="boss-element">ธาตุน้ำบริสุทธิ์</span>
+</div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface tracking-tight truncate mt-0.5" id="boss-name">ริมุรุ เทมเพสต์</h2>
+<div class="flex items-center gap-2 mt-1">
+<span class="px-2 py-0.5 rounded-DEFAULT bg-surface-container-high text-primary font-label-micro text-label-micro uppercase" id="boss-stance-tag">STANCE: WATER RUSH</span>
+<span class="font-label-hud text-label-hud text-outline" id="boss-lvl-tag">LV.120</span>
+</div>
+</div>
+</div>
+<!-- Manga Anime Voice Dialogue Bubble -->
+<div class="mt-space-md relative bg-surface-container-lowest rounded-lg p-space-md shadow-inner border border-outline-variant/40" id="dialogue-box">
+<div class="flex items-center justify-between mb-1">
+<span class="font-label-micro text-label-micro text-primary-container uppercase font-bold tracking-widest flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">chat_bubble</span>
+<span id="dialogue-speaker">RIMURU SAYS:</span>
+</span>
+<span class="font-label-micro text-label-micro text-outline" id="dialogue-mood">STANCE: COMBAT</span>
+</div>
+<p class="font-title-sm text-title-sm text-on-surface italic leading-snug transition-all duration-200" id="boss-dialogue-text">
+            "เตรียมรับมือคลื่นดาบวารีคณิตศาสตร์! คิดให้เร็ว ไม่งั้นโดนกลืนหายไปนะ~"
+          </p>
+<!-- Speech Bubble Notch -->
+<div class="w-3 h-3 bg-surface-container-lowest border-t border-l border-outline-variant/40 rotate-45 absolute -top-1.5 left-8"></div>
+</div>
+<!-- Boss Health Gauge -->
+<div class="mt-space-lg flex flex-col gap-1.5">
+<div class="flex items-center justify-between font-label-hud text-label-hud">
+<span class="text-on-surface-variant uppercase flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-error">favorite</span> BOSS HEALTH
+            </span>
+<span class="text-on-surface font-bold font-label-hud text-label-hud" id="boss-hp-numeric">2,000 / 2,000 HP</span>
+</div>
+<div class="w-full h-4 bg-surface-container-highest rounded-DEFAULT overflow-hidden p-0.5 shadow-inner">
+<div class="h-full bg-primary-container rounded-DEFAULT transition-all duration-300 shadow-[0_0_14px_rgba(0,240,255,0.7)]" id="boss-hp-bar" style="width: 100%;"></div>
+</div>
+</div>
+<!-- Boss Mana / Cursed Gauge -->
+<div class="mt-space-md flex flex-col gap-1">
+<div class="flex items-center justify-between font-label-hud text-label-hud">
+<span class="text-on-surface-variant uppercase flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-secondary">bolt</span> ENEMY CURSED ENERGY
+            </span>
+<span class="text-secondary font-bold font-label-hud text-label-hud" id="boss-energy-text">100.0%</span>
+</div>
+<div class="w-full h-2 bg-surface-container-highest rounded-DEFAULT overflow-hidden">
+<div class="h-full bg-secondary-container rounded-DEFAULT transition-all duration-500 shadow-[0_0_8px_#ff381e]" id="boss-mana-bar" style="width: 100%;"></div>
+</div>
+</div>
+<!-- 1.0s Attack Spell Charge Meter -->
+<div class="mt-space-lg pt-space-md bg-surface-container rounded-lg p-space-md border border-outline-variant/20">
+<div class="flex items-center justify-between mb-1.5">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-primary-container text-[18px] animate-spin" id="spell-icon">cyclone</span>
+<span class="font-headline-md text-headline-md text-primary tracking-wide text-sm font-bold" id="spell-name">วารีเวท Water Slash</span>
+</div>
+<span class="font-label-hud text-label-hud text-primary-container bg-surface-container-high px-2 py-0.5 rounded-DEFAULT font-bold" id="spell-cd-badge">COOLDOWN: 1.0s</span>
+</div>
+<!-- Cooldown Fill Bar (Simulated continuous rhythm) -->
+<div class="w-full h-2.5 bg-surface-container-highest rounded-DEFAULT overflow-hidden p-0.5">
+<div class="h-full bg-primary-container rounded-DEFAULT transition-all duration-100 shadow-[0_0_12px_#00f0ff]" id="spell-cooldown-bar" style="width: 100%;"></div>
+</div>
+<div class="flex items-center justify-between mt-2 font-label-micro text-label-micro text-on-surface-variant">
+<span id="spell-status-note">BOSS ATTACK INTERVAL: 1.0s</span>
+<span class="text-primary-fixed font-bold font-label-hud text-label-hud">COUNTER-STRIKE ACTIVE</span>
+</div>
+</div>
+</div>
+<!-- Boss Tactical Passive Stats Box -->
+<div class="bg-surface-container-low rounded-lg p-space-md shadow-md flex items-center justify-between border border-outline-variant/30">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-DEFAULT bg-surface-container-high flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">verified_user</span>
+</div>
+<div>
+<div class="font-label-micro text-label-micro text-on-surface-variant">TACTICAL RULE</div>
+<div class="font-title-sm text-title-sm text-on-surface font-bold" id="boss-rule-text">โหมดง่าย: บวก-ลบ 2 หลัก</div>
+</div>
+</div>
+<div class="text-right">
+<span class="font-label-hud text-label-hud text-primary-container font-bold" id="boss-rule-reward">+450 DMG / HIT</span>
+</div>
+</div>
+</div>
+<!-- CENTER COLUMN: Tactical Spell Calculation Arena (5 Cols) -->
+<div class="lg:col-span-5 flex flex-col gap-space-md">
+<!-- Problem Display Console -->
+<div class="bg-surface-container-low rounded-lg p-space-lg shadow-xl relative overflow-hidden border border-outline-variant/30" id="calculation-console">
+<!-- Attack Slash Visual Overlay (Player Strike) -->
+<div class="absolute inset-0 pointer-events-none flex items-center justify-center z-20 opacity-0" id="attack-slash-fx">
+<div class="w-96 h-2 bg-gradient-to-r from-transparent via-primary-container to-transparent rotate-12 shadow-[0_0_30px_#00f0ff]"></div>
+</div>
+<!-- Header Tier Badge -->
+<div class="flex items-center justify-between pb-space-sm border-b border-outline-variant/20">
+<div class="flex items-center gap-space-xs">
+<span class="px-2 py-1 rounded-DEFAULT bg-secondary-container text-on-secondary-container font-label-hud text-label-hud font-bold shadow-[0_0_12px_#ff381e]" id="tier-badge">TIER-EX FORMULA</span>
+<span class="font-label-micro text-label-micro text-on-surface-variant tracking-wider uppercase" id="question-index-label">QUESTION #01 // CLIMAX STRIKE</span>
+</div>
+<div class="flex items-center gap-1 font-label-hud text-label-hud text-primary-container">
+<span class="material-symbols-outlined text-[16px]">calculate</span>
+<span id="round-score-pill">PTS: 0</span>
+</div>
+</div>
+<!-- Big Tactical Arithmetic Formula Display -->
+<div class="py-space-xl px-space-md my-space-md bg-surface-container-lowest rounded-lg flex flex-col items-center justify-center relative shadow-inner border border-outline-variant/30 overflow-hidden" id="formula-container">
+<div class="font-label-micro text-label-micro text-outline tracking-widest uppercase mb-1">// SOLVE FORMULA TO DEFLECT INCOMING FATAL ATTACK</div>
+<div class="font-display-hero text-display-hero text-primary tracking-tight font-bold select-none text-center drop-shadow-[0_0_24px_rgba(0,240,255,0.4)] transition-all duration-300 min-h-[70px] flex items-center justify-center" id="formula-display">
+            34 + 28 = ?
+          </div>
+<div class="mt-2 flex items-center gap-2">
+<span class="font-label-hud text-label-hud text-on-surface-variant" id="operations-guide">OPERATIONS: [TWO-DIGIT ADDITION]</span>
+</div>
+</div>
+<!-- Emergency Countdown Warning Box -->
+<div class="bg-error-container/20 rounded-lg p-space-md shadow-sm border border-error/30 transition-colors" id="timer-box">
+<div class="flex items-center justify-between mb-1">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-error text-[18px]" id="timer-icon">warning</span>
+<span class="font-label-hud text-label-hud text-error font-bold uppercase tracking-wider" id="timer-title">CRITICAL TIME COLLAPSE</span>
+</div>
+<div class="font-headline-md text-headline-md text-error font-bold font-label-hud tracking-widest" id="timer-text">10.00s</div>
+</div>
+<!-- Time Bar -->
+<div class="w-full h-3 bg-surface-container-highest rounded-DEFAULT overflow-hidden p-0.5">
+<div class="h-full bg-secondary-container rounded-DEFAULT transition-all duration-75 shadow-[0_0_12px_#ff381e]" id="timer-bar" style="width: 100%;"></div>
+</div>
+<div class="flex items-center justify-between mt-1.5 font-label-micro text-label-micro text-error">
+<span class="font-bold" id="warning-subtext">บอสกำลังเตรียมปล่อยคลื่นดาบวารีสังหาร!</span>
+<span id="timeout-penalty-hint">MISS: -25 HP &amp; COMBO RESET</span>
+</div>
+</div>
+<!-- 4 Floating Answer Orbs / Keyboard Buttons -->
+<div class="mt-space-lg">
+<div class="flex items-center justify-between mb-2">
+<span class="font-label-micro text-label-micro text-on-surface-variant uppercase tracking-wider font-bold">ลูกแก้วพลังคำตอบ 4 ลูก (SELECT ANSWER ORB)</span>
+<span class="font-label-micro text-label-micro text-primary-container font-label-hud">DESKTOP KEYS: [1] [2] [3] [4]</span>
+</div>
+<div class="grid grid-cols-2 gap-space-md" id="answer-grid">
+<!-- Option 1 -->
+<button class="orb-card orb-float-a group relative p-space-lg rounded-lg bg-surface-container-high border border-outline-variant/40 hover:border-primary-container hover:bg-surface-bright transition-all duration-200 shadow-lg text-left flex items-center justify-between overflow-hidden cursor-pointer" id="btn-opt-0" onclick="handleAnswerClick(0)" type="button">
+<div class="flex items-center gap-space-md">
+<span class="w-8 h-8 rounded-DEFAULT bg-surface-container-lowest text-primary group-hover:bg-primary-container group-hover:text-on-primary-container flex items-center justify-center font-label-hud text-label-hud font-bold shadow-md transition-colors">1</span>
+<div>
+<div class="font-label-micro text-label-micro text-outline uppercase">VARIABLE ALPHA</div>
+<div class="font-headline-lg text-headline-lg font-bold text-on-surface" id="opt-text-0">62</div>
+</div>
+</div>
+<span class="material-symbols-outlined text-[24px] text-outline group-hover:text-primary-container opacity-50 group-hover:opacity-100 transition-opacity">radio_button_unchecked</span>
+</button>
+<!-- Option 2 -->
+<button class="orb-card orb-float-b group relative p-space-lg rounded-lg bg-surface-container-high border border-outline-variant/40 hover:border-primary-container hover:bg-surface-bright transition-all duration-200 shadow-lg text-left flex items-center justify-between overflow-hidden cursor-pointer" id="btn-opt-1" onclick="handleAnswerClick(1)" type="button">
+<div class="flex items-center gap-space-md">
+<span class="w-8 h-8 rounded-DEFAULT bg-surface-container-lowest text-primary group-hover:bg-primary-container group-hover:text-on-primary-container flex items-center justify-center font-label-hud text-label-hud font-bold shadow-md transition-colors">2</span>
+<div>
+<div class="font-label-micro text-label-micro text-outline uppercase">VARIABLE BETA</div>
+<div class="font-headline-lg text-headline-lg font-bold text-on-surface" id="opt-text-1">54</div>
+</div>
+</div>
+<span class="material-symbols-outlined text-[24px] text-outline group-hover:text-primary-container opacity-50 group-hover:opacity-100 transition-opacity">radio_button_unchecked</span>
+</button>
+<!-- Option 3 -->
+<button class="orb-card orb-float-b group relative p-space-lg rounded-lg bg-surface-container-high border border-outline-variant/40 hover:border-primary-container hover:bg-surface-bright transition-all duration-200 shadow-lg text-left flex items-center justify-between overflow-hidden cursor-pointer" id="btn-opt-2" onclick="handleAnswerClick(2)" type="button">
+<div class="flex items-center gap-space-md">
+<span class="w-8 h-8 rounded-DEFAULT bg-surface-container-lowest text-primary group-hover:bg-primary-container group-hover:text-on-primary-container flex items-center justify-center font-label-hud text-label-hud font-bold shadow-md transition-colors">3</span>
+<div>
+<div class="font-label-micro text-label-micro text-outline uppercase">VARIABLE GAMMA</div>
+<div class="font-headline-lg text-headline-lg font-bold text-on-surface" id="opt-text-2">68</div>
+</div>
+</div>
+<span class="material-symbols-outlined text-[24px] text-outline group-hover:text-primary-container opacity-50 group-hover:opacity-100 transition-opacity">radio_button_unchecked</span>
+</button>
+<!-- Option 4 -->
+<button class="orb-card orb-float-a group relative p-space-lg rounded-lg bg-surface-container-high border border-outline-variant/40 hover:border-primary-container hover:bg-surface-bright transition-all duration-200 shadow-lg text-left flex items-center justify-between overflow-hidden cursor-pointer" id="btn-opt-3" onclick="handleAnswerClick(3)" type="button">
+<div class="flex items-center gap-space-md">
+<span class="w-8 h-8 rounded-DEFAULT bg-surface-container-lowest text-primary group-hover:bg-primary-container group-hover:text-on-primary-container flex items-center justify-center font-label-hud text-label-hud font-bold shadow-md transition-colors">4</span>
+<div>
+<div class="font-label-micro text-label-micro text-outline uppercase">VARIABLE DELTA</div>
+<div class="font-headline-lg text-headline-lg font-bold text-on-surface" id="opt-text-3">52</div>
+</div>
+</div>
+<span class="material-symbols-outlined text-[24px] text-outline group-hover:text-primary-container opacity-50 group-hover:opacity-100 transition-opacity">radio_button_unchecked</span>
+</button>
+</div>
+</div>
+<!-- Calculation Formula Hint Footer -->
+<div class="mt-space-md pt-space-sm flex items-center justify-between text-on-surface-variant font-label-micro text-label-micro border-t border-outline-variant/20">
+<span class="flex items-center gap-1 truncate max-w-sm" id="hint-text"><span class="material-symbols-outlined text-[14px] text-primary-container">lightbulb</span> คำแนะนำ: คิดเลขในหลักหน่วยก่อน แล้วจึงทดไปหลักสิบ</span>
+<span class="text-primary-fixed font-label-hud text-label-hud shrink-0" id="round-exp-gain">EXP: +850 PT</span>
+</div>
+</div>
+<!-- Live Calculation Breakdown Spark -->
+<div class="bg-surface-container-low rounded-lg p-space-md flex items-center justify-between shadow-md border border-outline-variant/30">
+<div class="flex items-center gap-space-sm">
+<div class="w-3 h-3 rounded-full bg-primary-container animate-ping"></div>
+<span class="font-label-hud text-label-hud text-on-surface font-bold">COMBAT SCRIPT:</span>
+<span class="font-label-hud text-label-hud text-primary-container" id="combat-script-detail">[34 + 28] = 62 TARGET CALCULATION READY</span>
+</div>
+<div class="font-label-micro text-label-micro text-outline uppercase tracking-wider" id="ready-status-text">
+          READY STATE 100%
+        </div>
+</div>
+</div>
+<!-- RIGHT COLUMN: Player Combat Status & Metrics HUD (3 Cols) -->
+<div class="lg:col-span-3 flex flex-col gap-space-md">
+<!-- Player Status Card -->
+<div class="bg-surface-container-low rounded-lg p-space-lg shadow-xl relative overflow-hidden border border-outline-variant/30">
+<div class="font-label-micro text-label-micro text-outline tracking-widest uppercase mb-2">OPERATOR COMBAT TELEMETRY</div>
+<!-- Player Identity Bar -->
+<div class="flex items-center gap-space-md pb-space-md border-b border-outline-variant/20">
+<div class="w-14 h-14 rounded-lg bg-surface-container-high p-1 shadow-[0_0_16px_rgba(0,240,255,0.2)]">
+<img class="w-full h-full object-cover rounded-DEFAULT" data-alt="Anime shonen warrior tactical profile portrait with glowing electric visor, spiky black hair with cyan highlights, determined battle expression, cybernetic high collar jacket, dark futuristic anime style" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBJ7jJMfEVFOMkYY5bNKzIzyIKDew8bll2fiegzKSQ0ckzEYi4i_cI-9GNMRpQtZtsvYZqynMQ1zdmdOfnKp0XB2rqsii1yZvuBvtIeoqOb5OpzNQRuMgF4NwCNikm9AOTt6HhsIuQCPKdCv61P8HW1Ngf42VcnU0SwVxF3MsTs8z_1asHIeMFCej9K5tK0E1WWOr0IEHffDhZHuBBo7DEMNsQdb_GDlrL--LujK1XL"/>
+</div>
+<div>
+<div class="font-title-sm text-title-sm text-on-surface font-bold">MATH-BLADE ZERO</div>
+<div class="flex items-center gap-1 mt-0.5">
+<span class="px-1.5 py-0.5 rounded-DEFAULT bg-primary-container text-on-primary-container font-label-micro text-label-micro font-bold" id="player-rank-tag">RANK: SSS</span>
+<span class="font-label-micro text-label-micro text-on-surface-variant">LV.89</span>
+</div>
+</div>
+</div>
+<!-- Player Health / Spirit -->
+<div class="mt-space-md flex flex-col gap-1.5">
+<div class="flex items-center justify-between font-label-hud text-label-hud">
+<span class="text-on-surface-variant uppercase flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-primary-container">shield_with_heart</span> PLAYER SPIRIT (HP)
+            </span>
+<span class="text-primary font-bold font-label-hud text-label-hud" id="player-hp-text">100 / 100</span>
+</div>
+<div class="w-full h-3.5 bg-surface-container-highest rounded-DEFAULT overflow-hidden p-0.5">
+<div class="h-full bg-primary-container rounded-DEFAULT transition-all duration-300 shadow-[0_0_12px_#00f0ff]" id="player-hp-bar" style="width: 100%;"></div>
+</div>
+</div>
+<!-- Combo Counter Section (Hyper Dramatic) -->
+<div class="mt-space-lg p-space-md rounded-lg bg-surface-container-lowest text-center relative overflow-hidden shadow-inner border border-outline-variant/30">
+<div class="font-label-micro text-label-micro text-primary-container uppercase tracking-widest font-bold">DYNAMIC COMBO MULTIPLIER</div>
+<div class="flex items-baseline justify-center gap-2 my-1">
+<span class="font-display-hero text-display-hero text-primary tracking-tighter italic font-bold drop-shadow-[0_0_20px_#00f0ff]" id="combo-number">0</span>
+<span class="font-label-combo text-label-combo text-secondary-container italic font-bold">x</span>
+</div>
+<div class="flex items-center justify-center gap-2">
+<span class="px-2 py-0.5 rounded-DEFAULT bg-secondary-container text-on-secondary-container font-label-hud text-label-hud font-bold shadow-[0_0_12px_#ff381e]" id="combo-status-badge">COMBO DRIVE</span>
+<span class="font-label-micro text-label-micro text-on-surface-variant" id="combo-bonus-text">STRIKE READY</span>
+</div>
+</div>
+<!-- Real-time Metrics (DPS, Accuracy, Speed) -->
+<div class="mt-space-md grid grid-cols-2 gap-space-sm">
+<div class="p-space-sm rounded-DEFAULT bg-surface-container-high">
+<span class="font-label-micro text-label-micro text-on-surface-variant uppercase">SCORE TOTAL</span>
+<div class="font-headline-md text-headline-md text-primary font-bold" id="metric-score">0</div>
+<span class="font-label-micro text-label-micro text-primary-container" id="metric-correct-count">0 hits</span>
+</div>
+<div class="p-space-sm rounded-DEFAULT bg-surface-container-high">
+<span class="font-label-micro text-label-micro text-on-surface-variant uppercase">ACCURACY</span>
+<div class="font-headline-md text-headline-md text-on-surface font-bold" id="metric-accuracy">100%</div>
+<span class="font-label-micro text-label-micro text-outline font-label-hud" id="metric-accuracy-state">PRECISION</span>
+</div>
+</div>
+<!-- Domain Expansion / Burst Gauge -->
+<div class="mt-space-lg pt-space-md border-t border-outline-variant/20">
+<div class="flex items-center justify-between mb-1.5 font-label-hud text-label-hud">
+<span class="text-tertiary-fixed font-bold flex items-center gap-1 uppercase">
+<span class="material-symbols-outlined text-[16px] text-tertiary-fixed-dim">flare</span> DOMAIN BURST GAUGE
+            </span>
+<span class="text-primary-container font-bold" id="domain-gauge-text">30%</span>
+</div>
+<div class="w-full h-2 bg-surface-container-highest rounded-DEFAULT overflow-hidden mb-space-md">
+<div class="h-full bg-primary-container shadow-[0_0_12px_#00f0ff] transition-all duration-300" id="domain-gauge-bar" style="width: 30%;"></div>
+</div>
+<!-- Big Burst Trigger Button -->
+<button class="w-full py-space-md px-space-md rounded-lg bg-surface-container-high text-on-surface-variant font-headline-md text-headline-md uppercase font-bold tracking-wider transition-all duration-300 flex items-center justify-center gap-space-sm cursor-not-allowed opacity-60" id="btn-burst" onclick="triggerBurst()" type="button">
+<span class="material-symbols-outlined text-[24px]">bolt</span>
+<span id="burst-button-label">DOMAIN EXPANSION!</span>
+</button>
+<span class="block text-center mt-1.5 font-label-micro text-label-micro text-outline" id="burst-instruction">FILL GAUGE 100% TO ACTIVATE (OR PRESS SPACE)</span>
+</div>
+</div>
+<!-- Quick Session Rank Snapshot -->
+<div class="bg-surface-container-low rounded-lg p-space-md shadow-md flex items-center justify-between border border-outline-variant/30">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-primary text-[20px]">military_tech</span>
+<div>
+<div class="font-label-micro text-label-micro text-on-surface-variant">SEASON LADDER</div>
+<div class="font-title-sm text-title-sm text-on-surface">GRANDMASTER TIER II</div>
+</div>
+</div>
+<span class="font-label-hud text-label-hud text-primary-container font-bold">#14 ASIA</span>
+</div>
+</div>
+</div>
+<!-- Bottom Combat Control & Audio HUD Bar -->
+<section class="mt-6 w-full bg-surface-container-low rounded-lg p-space-md shadow-lg flex flex-col md:flex-row items-center justify-between gap-space-md border border-outline-variant/30">
+<!-- Battle Log Live Feed -->
+<div class="flex items-center gap-space-md overflow-hidden max-w-2xl w-full">
+<div class="flex items-center gap-1 font-label-hud text-label-hud text-primary-container font-bold uppercase shrink-0">
+<span class="material-symbols-outlined text-[16px]">list_alt</span>
+<span>COMBAT FEED:</span>
+</div>
+<div class="font-label-hud text-label-hud text-on-surface truncate" id="battle-feed-log">
+        [SYS] ยินดีต้อนรับสู่สมรภูมิคณิตศาสตร์! ตอบให้ถูกต้องเพื่อฟันดาบสกัดบอส!
+      </div>
+</div>
+<!-- Hotkey Cheatsheet & Audio Toggles -->
+<div class="flex items-center gap-space-md shrink-0">
+<!-- Hotkeys Hint -->
+<div class="hidden lg:flex items-center gap-space-xs font-label-micro text-label-micro text-outline">
+<span class="px-1.5 py-0.5 rounded-DEFAULT bg-surface-container-high text-on-surface">1..4</span>
+<span>SELECT</span>
+<span class="px-1.5 py-0.5 rounded-DEFAULT bg-surface-container-high text-on-surface">SPACE</span>
+<span>BURST</span>
+<span class="px-1.5 py-0.5 rounded-DEFAULT bg-surface-container-high text-on-surface">R</span>
+<span>RESET</span>
+</div>
+<!-- Sound FX Switcher -->
+<button class="px-space-md py-space-xs rounded-DEFAULT bg-surface-container-high hover:bg-surface-bright text-on-surface font-label-hud text-label-hud flex items-center gap-1.5 transition-colors cursor-pointer" id="btn-audio-toggle" onclick="toggleAudio()" type="button">
+<span class="material-symbols-outlined text-[16px] text-primary-container" id="audio-icon">volume_up</span>
+<span id="audio-label">SFX &amp; VOICE: ON</span>
+</button>
+<!-- Instant Restart -->
+<button class="px-space-md py-space-xs rounded-DEFAULT bg-surface-container-high hover:bg-surface-bright text-on-surface font-label-hud text-label-hud flex items-center gap-1 transition-colors cursor-pointer" onclick="resetBattle()" type="button">
+<span class="material-symbols-outlined text-[16px]">restart_alt</span>
+<span>RESET MATCH</span>
+</button>
+</div>
+</section>
+</div>
+<!-- Victory / Defeat Modal -->
+<div class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 hidden" id="result-modal">
+<div class="bg-surface-container-low border-2 border-primary-container rounded-xl p-space-xl max-w-lg w-full text-center relative shadow-[0_0_50px_rgba(0,240,255,0.4)] overflow-hidden" id="modal-container">
+<div class="w-20 h-20 mx-auto rounded-full bg-primary-container/20 flex items-center justify-center mb-4 border border-primary-container/50">
+<span class="material-symbols-outlined text-[48px] text-primary-container" id="modal-icon">emoji_events</span>
+</div>
+<h2 class="font-display-hero text-[36px] leading-[40px] uppercase font-bold text-primary mb-2" id="modal-title">VICTORY ACHIEVED!</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-6" id="modal-desc">คุณสามารถคำนวณและสยบบอสได้อย่างสมบูรณ์แบบ!</p>
+<div class="grid grid-cols-3 gap-2 bg-surface-container-lowest p-3 rounded-lg mb-6 border border-outline-variant/30">
+<div>
+<div class="font-label-micro text-label-micro text-outline">TOTAL SCORE</div>
+<div class="font-headline-md text-headline-md text-primary font-bold" id="modal-score">0</div>
+</div>
+<div>
+<div class="font-label-micro text-label-micro text-outline">MAX COMBO</div>
+<div class="font-headline-md text-headline-md text-secondary font-bold" id="modal-combo">0x</div>
+</div>
+<div>
+<div class="font-label-micro text-label-micro text-outline">ACCURACY</div>
+<div class="font-headline-md text-headline-md text-tertiary font-bold" id="modal-acc">100%</div>
+</div>
+</div>
+<div class="flex gap-space-sm justify-center">
+<button class="px-6 py-3 rounded-lg bg-surface-container-high hover:bg-surface-bright text-on-surface font-headline-md text-sm font-bold uppercase transition-colors" onclick="closeResultModal()">ปิดหน้าต่าง</button>
+<button class="px-6 py-3 rounded-lg bg-primary-container hover:bg-primary text-on-primary-container font-headline-md text-sm font-bold uppercase transition-all shadow-[0_0_20px_rgba(0,240,255,0.6)]" onclick="resetBattle(); closeResultModal();">เล่นอีกครั้ง (PLAY AGAIN)</button>
+</div>
+</div>
+</div>
+<!-- Interactive Battle Engine Script -->
+<script>
+  // Boss Profiles Dataset
+  const bossData = {
+    rimuru: {
+      name: "ริมุรุ เทมเพสต์",
+      epithet: "SLIME ARCHON",
+      element: "ธาตุน้ำบริสุทธิ์",
+      threat: "THREAT: S",
+      stance: "STANCE: WATER RUSH",
+      spell: "วารีเวท Water Slash",
+      limitSeconds: 10,
+      damagePerHit: 400,
+      ruleText: "โหมดง่าย: บวก-ลบ 2 หลัก",
+      dialogueNormal: '"เตรียมรับมือคลื่นดาบวารีคณิตศาสตร์! คิดให้เร็ว ไม่งั้นโดนกลืนหายไปนะ~"',
+      dialogueWrong: '"เอาไหม่น่าาาา! คำนวณพลาดแบบนี้วารีเวทฟันขาดสองท่อนนะ!"',
+      dialogueTimeout: '"ช้าเกินไปแล้ว! วารีเวททะลวงเกราะ!"',
+      dialogueWin: '"สุดยอดเลย! พลังคำนวณระดับจอมมารจริงๆ..."',
+      voiceWrong: 'เอาไหม่น่าาาา!',
+      voiceSpell: 'วารีเวท Water Slash!',
+      accentColor: "#00f0ff",
+      bgAura: "rgba(0, 240, 255, 0.15)",
+      avatarImg: "https://lh3.googleusercontent.com/aida-public/AB6AXuAgBzLD4RUSDN220dlfbaryYr9qhH9F-OUz7ULsUCNUCMIMt9aDxY-_UnMB8ZYwMMpBVRpIHk8WWe8hVT4SAI59jFXQwT7p1tqZcBt51q6ZuERKPWQlz67_Euk32OLpeAqfDXgz3JYJYHuchNLuE75zc6uz5SLVTPAFr5GjwtvVxdtKnh2D7R97AAPUZcIFeNefTmK3x18gEQwpHJg_Fla_Z61xhwewW57dVTE-nkSa",
+      avatarAlt: "Anime style tactical portrait of Rimuru Tempest",
+      warningText: "บอสกำลังเตรียมปล่อยคลื่นดาบวารีสังหาร!",
+      cutinTitle: "⚔️ วารีสะบั้น! // WATER SLASH",
+      cutinSub: "SEVENTH WATER BLADE TECHNIQUE",
+      cutinIcon: "tsunami",
+      cutinTheme: "water"
+    },
+    sukuna: {
+      name: "เรียวเมน สุคุนะ (Ryomen Sukuna)",
+      epithet: "KING OF CURSES",
+      element: "เพลิงอัคคีทมิฬ",
+      threat: "THREAT: CALAMITY",
+      stance: "STANCE: MALEVOLENT DOMAIN",
+      spell: 'เตาหลอมเพลิงอัคคี "ฟูกะ (Fūga)"',
+      limitSeconds: 8,
+      damagePerHit: 450,
+      ruleText: "โหมดกลาง: คูณ-หาร & เลขสองชั้น",
+      dialogueNormal: '"จงภูมิใจในความสามารถ... แต่ถ้าตอบเลขผิด ดาบผ่าวิญญาณจะเผาเจ้าจนเป็นผุยผง!"',
+      dialogueWrong: '"กากเดน! เตาหลอมเพลิงอัคคี "ฟูกะ" จงเผามันให้วอดวาย!"',
+      dialogueTimeout: '"ฟูกะ! เปลวเพลิงจงกลืนกินคนเขลา!"',
+      dialogueWin: '"หึ... คำนวณเร็วใช้ได้นี่ เจ้ามนุษย์"',
+      voiceWrong: 'ฟูกะ!',
+      voiceSpell: 'ฟูกะ! จงเผามัน!',
+      accentColor: "#d81700",
+      bgAura: "rgba(216, 23, 0, 0.2)",
+      avatarImg: "https://lh3.googleusercontent.com/aida-public/AB6AXuBJ7jJMfEVFOMkYY5bNKzIzyIKDew8bll2fiegzKSQ0ckzEYi4i_cI-9GNMRpQtZtsvYZqynMQ1zdmdOfnKp0XB2rqsii1yZvuBvtIeoqOb5OpzNQRuMgF4NwCNikm9AOTt6HhsIuQCPKdCv61P8HW1Ngf42VcnU0SwVxF3MsTs8z_1asHIeMFCej9K5tK0E1WWOr0IEHffDhZHuBBo7DEMNsQdb_GDlrL--LujK1XL",
+      avatarAlt: "Close-up anime battle portrait of Ryomen Sukuna with cursed tattoos",
+      warningText: "ระวังเตาหลอมเพลิงอัคคี ฟูกะ กำลังแผดเผา!",
+      cutinTitle: "🔥 เปิดเตาหลอมอัคคี... ฟูกะ! // OPEN // FŪGA!",
+      cutinSub: "DIVINE FLAME CALAMITY ARROW",
+      cutinIcon: "local_fire_department",
+      cutinTheme: "fire"
+    },
+    akaza: {
+      name: "อาคาสะ (Akaza - Upper Rank 3)",
+      epithet: "DESTRUCTIVE MARTIALIST",
+      element: "ปราณอสูรทำลายล้าง",
+      threat: "THREAT: DISASTER",
+      stance: "STANCE: NEEDLE COMPASS",
+      spell: "เข็มทิศทำลายล้าง Destructive Death",
+      limitSeconds: 5,
+      damagePerHit: 500,
+      ruleText: "โหมดนรก: สมการผสมวงเล็บเข้มข้น",
+      dialogueNormal: '"มาเป็นอสูรด้วยกันสิ! จงพิสูจน์ความแข็งแกร่งด้วยความเร็วในการคำนวณ!"',
+      dialogueWrong: '"อ่อนเเอก็เเพ้ไป! ช้าแบบนี้จะปกป้องใครได้กันเล่า!"',
+      dialogueTimeout: '"อ่อนเเอก็เเพ้ไป! ตายซะเถอะ!"',
+      dialogueWin: '"การตอบสนองระดับนี้... ยอดเยี่ยมมาก เจ้าช่างคู่ควรกับการเป็นคู่ต่อสู้!"',
+      voiceWrong: 'อ่อนเเอก็เเพ้ไป!',
+      voiceSpell: 'เข็มทิศทำลายล้าง!',
+      accentColor: "#b70075",
+      bgAura: "rgba(183, 0, 117, 0.2)",
+      avatarImg: "https://lh3.googleusercontent.com/aida-public/AB6AXuAgBzLD4RUSDN220dlfbaryYr9qhH9F-OUz7ULsUCNUCMIMt9aDxY-_UnMB8ZYwMMpBVRpIHk8WWe8hVT4SAI59jFXQwT7p1tqZcBt51q6ZuERKPWQlz67_Euk32OLpeAqfDXgz3JYJYHuchNLuE75zc6uz5SLVTPAFr5GjwtvVxdtKnh2D7R97AAPUZcIFeNefTmK3x18gEQwpHJg_Fla_Z61xhwewW57dVTE-nkSa",
+      avatarAlt: "Aggressive action anime portrait of Akaza",
+      warningText: "เข็มทิศทำลายล้างเล็งเป้าแล้ว! หมัดสุญญากาศจะปะทะ!",
+      cutinTitle: "❄️ เข็มทิศทำลายล้าง! // DESTRUCTIVE DEATH",
+      cutinSub: "UPPER THREE COMPASS NEEDLE",
+      cutinIcon: "explore",
+      cutinTheme: "compass"
+    }
+  };
+
+  // State Variables
+  let currentBoss = 'rimuru';
+  let bossHp = 2000;
+  let maxBossHp = 2000;
+  let playerHp = 100;
+  let maxPlayerHp = 100;
+  let comboCount = 0;
+  let maxCombo = 0;
+  let totalScore = 0;
+  let totalQuestions = 0;
+  let correctCount = 0;
+  let domainGauge = 30; // 0-100%
+  let questionNumber = 1;
+  let isAnswerLocked = false;
+  let isGameOver = false;
+
+  // Real Timer Variables
+  let timeRemaining = 10.0;
+  let totalTimeLimit = 10.0;
+  let timerInterval = null;
+  let audioEnabled = true;
+
+  // Current Question Object
+  let currentQ = {
+    formula: "34 + 28 = ?",
+    solution: 62,
+    options: [62, 54, 68, 52],
+    hint: "คิดเลขในหลักหน่วยก่อน แล้วจึงทดไปหลักสิบ",
+    operationDesc: "OPERATIONS: [TWO-DIGIT ADDITION]"
+  };
+
+  // Web Speech API Voice Synthesizer
+  function speakVoice(text) {
+    if (!audioEnabled || !('speechSynthesis' in window)) return;
+    try {
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = 'th-TH';
+      utterance.rate = 1.18;
+      utterance.pitch = 1.05;
+      window.speechSynthesis.speak(utterance);
+    } catch(e) {
+      console.warn("SpeechSynthesis error:", e);
+    }
+  }
+
+  // Audio tone generation for SFX with rich synthesis
+  function playBeep(type) {
+    if (!audioEnabled) return;
+    try {
+      const ctx = new (window.AudioContext || window.webkitAudioContext)();
+
+      if (type === 'hit') {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(520, ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(880, ctx.currentTime + 0.15);
+        gain.gain.setValueAtTime(0.3, ctx.currentTime);
+        gain.gain.linearRampToValueAtTime(0.01, ctx.currentTime + 0.2);
+        osc.start();
+        osc.stop(ctx.currentTime + 0.2);
+      } else if (type === 'wrong') {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(220, ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(110, ctx.currentTime + 0.3);
+        gain.gain.setValueAtTime(0.35, ctx.currentTime);
+        gain.gain.linearRampToValueAtTime(0.01, ctx.currentTime + 0.35);
+        osc.start();
+        osc.stop(ctx.currentTime + 0.35);
+      } else if (type === 'water_slash') {
+        // High resonance whoosh + sonic slice
+        const osc = ctx.createOscillator();
+        const osc2 = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sawtooth';
+        osc2.type = 'sine';
+        osc.frequency.setValueAtTime(900, ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(180, ctx.currentTime + 0.45);
+        osc2.frequency.setValueAtTime(1200, ctx.currentTime);
+        osc2.frequency.exponentialRampToValueAtTime(240, ctx.currentTime + 0.35);
+        osc.connect(gain);
+        osc2.connect(gain);
+        gain.connect(ctx.destination);
+        gain.gain.setValueAtTime(0.45, ctx.currentTime);
+        gain.gain.linearRampToValueAtTime(0.01, ctx.currentTime + 0.5);
+        osc.start();
+        osc2.start();
+        osc.stop(ctx.currentTime + 0.5);
+        osc2.stop(ctx.currentTime + 0.5);
+      } else if (type === 'fuga_fire') {
+        // Deep explosive sub bass + sizzling sizzle
+        const bufferSize = ctx.sampleRate * 0.7;
+        const noiseBuffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+        const output = noiseBuffer.getChannelData(0);
+        for (let i = 0; i < bufferSize; i++) {
+          output[i] = Math.random() * 2 - 1;
+        }
+        const whiteNoise = ctx.createBufferSource();
+        whiteNoise.buffer = noiseBuffer;
+
+        const filter = ctx.createBiquadFilter();
+        filter.type = 'lowpass';
+        filter.frequency.setValueAtTime(450, ctx.currentTime);
+        filter.frequency.linearRampToValueAtTime(80, ctx.currentTime + 0.7);
+
+        const gainNode = ctx.createGain();
+        gainNode.gain.setValueAtTime(0.5, ctx.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.7);
+
+        whiteNoise.connect(filter);
+        filter.connect(gainNode);
+        gainNode.connect(ctx.destination);
+
+        // Sub rumble tone
+        const subOsc = ctx.createOscillator();
+        const subGain = ctx.createGain();
+        subOsc.type = 'sawtooth';
+        subOsc.frequency.setValueAtTime(140, ctx.currentTime);
+        subOsc.frequency.exponentialRampToValueAtTime(35, ctx.currentTime + 0.7);
+        subGain.gain.setValueAtTime(0.5, ctx.currentTime);
+        subGain.gain.linearRampToValueAtTime(0.01, ctx.currentTime + 0.7);
+        subOsc.connect(subGain);
+        subGain.connect(ctx.destination);
+
+        whiteNoise.start();
+        subOsc.start();
+        whiteNoise.stop(ctx.currentTime + 0.7);
+        subOsc.stop(ctx.currentTime + 0.7);
+      } else if (type === 'akaza_shock') {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'square';
+        osc.frequency.setValueAtTime(320, ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(80, ctx.currentTime + 0.4);
+        gain.gain.setValueAtTime(0.4, ctx.currentTime);
+        gain.gain.linearRampToValueAtTime(0.01, ctx.currentTime + 0.4);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + 0.4);
+      } else if (type === 'burst') {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(300, ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(1200, ctx.currentTime + 0.5);
+        gain.gain.setValueAtTime(0.4, ctx.currentTime);
+        gain.gain.linearRampToValueAtTime(0.01, ctx.currentTime + 0.6);
+        osc.start();
+        osc.stop(ctx.currentTime + 0.6);
+      }
+    } catch(e) {
+      // AudioContext unavailable or blocked
+    }
+  }
+
+  // ==========================================
+  // DRAMATIC BOSS ATTACK ANIMATION SYSTEM
+  // ==========================================
+  function triggerBossAttackAnimation(bossKey) {
+    const stage = document.getElementById('boss-cinematic-stage');
+    const flash = document.getElementById('arena-flash-screen');
+    const banner = document.getElementById('attack-cutin-banner');
+    const cutinTitle = document.getElementById('cutin-title');
+    const cutinSubtitle = document.getElementById('cutin-subtitle');
+    const cutinIcon = document.getElementById('cutin-icon');
+    const cutinBadge = document.getElementById('cutin-badge');
+    const cutinCaster = document.getElementById('cutin-caster');
+
+    const waterContainer = document.getElementById('water-slash-container');
+    const fugaContainer = document.getElementById('fuga-flame-container');
+    const akazaContainer = document.getElementById('akaza-shock-container');
+    const embersBox = document.getElementById('fuga-embers-box');
+    const b = bossData[bossKey];
+
+    if (!stage) return;
+
+    // Reset visibility of child FX
+    stage.classList.remove('hidden');
+    if (waterContainer) waterContainer.classList.add('hidden');
+    if (fugaContainer) fugaContainer.classList.add('hidden');
+    if (akazaContainer) akazaContainer.classList.add('hidden');
+    if (embersBox) embersBox.innerHTML = '';
+
+    // Setup Cut-in Text
+    if (cutinTitle) cutinTitle.textContent = b.cutinTitle;
+    if (cutinSubtitle) cutinSubtitle.textContent = b.cutinSub;
+    if (cutinIcon) cutinIcon.textContent = b.cutinIcon;
+    if (cutinCaster) cutinCaster.textContent = `CASTER: ${b.name.toUpperCase()}`;
+
+    // Apply Cut-in Banner Color Palette
+    if (banner) {
+      banner.className = "opacity-0 max-w-4xl w-full mx-4 px-8 py-4 shadow-2xl relative border-y-4 flex items-center justify-between";
+      if (b.cutinTheme === 'water') {
+        banner.classList.add('bg-surface-container-lowest/95', 'border-primary-container', 'text-primary-container', 'shadow-[0_0_50px_rgba(0,240,255,0.7)]');
+        cutinBadge.className = "font-label-hud text-label-hud font-bold px-2 py-0.5 rounded uppercase bg-primary-container text-on-primary-container shadow-[0_0_12px_#00f0ff]";
+        flash.className = "absolute inset-0 pointer-events-none bg-primary-container/30 water-flash-overlay";
+      } else if (b.cutinTheme === 'fire') {
+        banner.classList.add('bg-black/95', 'border-secondary-container', 'text-secondary-fixed', 'shadow-[0_0_60px_rgba(216,23,0,0.8)]');
+        cutinBadge.className = "font-label-hud text-label-hud font-bold px-2 py-0.5 rounded uppercase bg-secondary-container text-white shadow-[0_0_15px_#ff381e]";
+        flash.className = "absolute inset-0 pointer-events-none bg-red-600/40 water-flash-overlay";
+      } else {
+        banner.classList.add('bg-surface-container-lowest/95', 'border-tertiary-container', 'text-tertiary-fixed', 'shadow-[0_0_50px_rgba(255,175,208,0.7)]');
+        cutinBadge.className = "font-label-hud text-label-hud font-bold px-2 py-0.5 rounded uppercase bg-on-tertiary-container text-white shadow-[0_0_12px_#ffafd0]";
+        flash.className = "absolute inset-0 pointer-events-none bg-purple-700/35 water-flash-overlay";
+      }
+
+      banner.classList.remove('banner-cutin-active');
+      void banner.offsetWidth; // reflow
+      banner.classList.add('banner-cutin-active');
+    }
+
+    // Trigger Boss-specific particle & audio effects
+    if (bossKey === 'rimuru') {
+      playBeep('water_slash');
+      triggerScreenShake(false);
+      if (waterContainer) {
+        waterContainer.classList.remove('hidden');
+        // Restart CSS animations inside
+        const waves = waterContainer.querySelectorAll('.water-slash-stroke, .water-ripple-ring');
+        waves.forEach(el => {
+          el.style.animation = 'none';
+          void el.offsetWidth;
+          el.style.animation = '';
+        });
+      }
+    } else if (bossKey === 'sukuna') {
+      playBeep('fuga_fire');
+      triggerScreenShake(true); // Heavy Rumble
+      if (fugaContainer) {
+        fugaContainer.classList.remove('hidden');
+        // Restart animations
+        const fires = fugaContainer.querySelectorAll('.fuga-arrow-stroke, .fuga-fire-burst');
+        fires.forEach(el => {
+          el.style.animation = 'none';
+          void el.offsetWidth;
+          el.style.animation = '';
+        });
+
+        // Spawn dynamic flying embers
+        if (embersBox) {
+          for (let i = 0; i < 28; i++) {
+            const ember = document.createElement('div');
+            const size = Math.floor(Math.random() * 8) + 4;
+            const tx = (Math.random() * 600 - 300) + 'px';
+            const ty = (Math.random() * 500 - 250) + 'px';
+            const dur = (0.5 + Math.random() * 0.5) + 's';
+            ember.className = 'absolute rounded-full pointer-events-none';
+            ember.style.width = size + 'px';
+            ember.style.height = size + 'px';
+            ember.style.left = '50%';
+            ember.style.top = '50%';
+            ember.style.backgroundColor = Math.random() > 0.4 ? '#ff381e' : '#ffd54f';
+            ember.style.boxShadow = '0 0 14px #ff5722';
+            ember.style.setProperty('--tx', tx);
+            ember.style.setProperty('--ty', ty);
+            ember.style.animation = `fireEmberFly ${dur} cubic-bezier(0.1, 0.8, 0.2, 1) forwards`;
+            ember.style.animationDelay = (Math.random() * 0.2) + 's';
+            embersBox.appendChild(ember);
+          }
+        }
+      }
+    } else {
+      // Akaza
+      playBeep('akaza_shock');
+      triggerScreenShake(false);
+      if (akazaContainer) {
+        akazaContainer.classList.remove('hidden');
+        const shocks = akazaContainer.querySelectorAll('.akaza-compass-anim, .akaza-shock-anim');
+        shocks.forEach(el => {
+          el.style.animation = 'none';
+          void el.offsetWidth;
+          el.style.animation = '';
+        });
+      }
+    }
+
+    // Hide stage when animation completes
+    setTimeout(() => {
+      stage.classList.add('hidden');
+    }, 1150);
+  }
+
+  // Question Generator per Boss Mode
+  function generateQuestion(bossKey) {
+    let formula = "";
+    let solution = 0;
+    let hint = "";
+    let operationDesc = "";
+
+    if (bossKey === 'rimuru') {
+      // Easy: 2-digit Addition / Subtraction
+      const isAdd = Math.random() > 0.45;
+      if (isAdd) {
+        const a = Math.floor(Math.random() * 45) + 15;
+        const b = Math.floor(Math.random() * 45) + 12;
+        solution = a + b;
+        formula = `${a} + ${b} = ?`;
+        hint = `คำแนะนำ: นำหลักหน่วย (${a%10} + ${b%10}) บวกกันก่อน แล้วทดไปหลักสิบ`;
+        operationDesc = "OPERATIONS: [TWO-DIGIT ADDITION]";
+      } else {
+        const a = Math.floor(Math.random() * 50) + 40;
+        const b = Math.floor(Math.random() * 30) + 11;
+        solution = a - b;
+        formula = `${a} - ${b} = ?`;
+        hint = `คำแนะนำ: หากหลักหน่วยตัวตั้งน้อยกว่า ให้ยืมจากหลักสิบ`;
+        operationDesc = "OPERATIONS: [TWO-DIGIT SUBTRACTION]";
+      }
+    } else if (bossKey === 'sukuna') {
+      // Medium: Multiplications & Multi-step (e.g. 14 × 6 + 18, 84 ÷ 7 + 35)
+      const type = Math.floor(Math.random() * 2);
+      if (type === 0) {
+        const a = Math.floor(Math.random() * 9) + 11; // 11-19
+        const b = Math.floor(Math.random() * 6) + 3;  // 3-8
+        const c = Math.floor(Math.random() * 35) + 10;
+        solution = (a * b) + c;
+        formula = `${a} × ${b} + ${c} = ?`;
+        hint = `คำแนะนำ: ทำการคูณ ${a} × ${b} = ${a*b} ก่อน แล้วค่อยบวก ${c}`;
+        operationDesc = "OPERATIONS: [MULTIPLICATION & ADDITION]";
+      } else {
+        const divisors = [4, 6, 7, 8, 9];
+        const div = divisors[Math.floor(Math.random() * divisors.length)];
+        const quot = Math.floor(Math.random() * 12) + 8; // 8-19
+        const a = div * quot;
+        const c = Math.floor(Math.random() * 40) + 15;
+        solution = quot + c;
+        formula = `${a} ÷ ${div} + ${c} = ?`;
+        hint = `คำแนะนำ: ทำการหาร ${a} ÷ ${div} = ${quot} ก่อน แล้วบวก ${c}`;
+        operationDesc = "OPERATIONS: [DIVISION & ADDITION]";
+      }
+    } else {
+      // Hard: Akaza - Bracket Heavy Multi-step (e.g. (18 × 7) - (96 ÷ 8))
+      const type = Math.floor(Math.random() * 2);
+      if (type === 0) {
+        const a = Math.floor(Math.random() * 8) + 12; // 12-19
+        const b = Math.floor(Math.random() * 5) + 6;  // 6-10
+        const div = Math.floor(Math.random() * 5) + 4; // 4-8
+        const quot = Math.floor(Math.random() * 8) + 6; // 6-13
+        const c = div * quot;
+        solution = (a * b) - quot;
+        formula = `(${a} × ${b}) - (${c} ÷ ${div}) = ?`;
+        hint = `คำแนะนำ: (${a}×${b}=${a*b}) และ (${c}÷${div}=${quot}) แล้วนำมาลบกัน`;
+        operationDesc = "OPERATIONS: [BRACKET MULTIPLICATION - DIVISION]";
+      } else {
+        const a = Math.floor(Math.random() * 10) + 12; // 12-21
+        const b = Math.floor(Math.random() * 5) + 4;  // 4-8
+        const div = Math.floor(Math.random() * 4) + 6; // 6-9
+        const quot = Math.floor(Math.random() * 7) + 5; // 5-11
+        const c = div * quot;
+        solution = (a * b) + quot;
+        formula = `(${a} × ${b}) + (${c} ÷ ${div}) = ?`;
+        hint = `คำแนะนำ: คำนวณในวงเล็บทั้งสองฝั่งให้เสร็จสิ้นก่อนแล้วบวกกัน`;
+        operationDesc = "OPERATIONS: [BRACKET MULTIPLICATION + DIVISION]";
+      }
+    }
+
+    // Generate 4 unique options including the solution
+    const optionsSet = new Set([solution]);
+    const offsets = [-10, 10, -2, 2, -12, 12, -4, 4, -1, 1, 8, -8];
+    let offsetIdx = 0;
+    while (optionsSet.size < 4 && offsetIdx < offsets.length) {
+      const candidate = solution + offsets[offsetIdx];
+      if (candidate > 0 && candidate !== solution) {
+        optionsSet.add(candidate);
+      }
+      offsetIdx++;
+    }
+    // Fallback if needed
+    while (optionsSet.size < 4) {
+      optionsSet.add(solution + Math.floor(Math.random() * 20) - 10);
+    }
+
+    const options = Array.from(optionsSet).sort(() => Math.random() - 0.5);
+
+    return {
+      formula,
+      solution,
+      options,
+      hint,
+      operationDesc
+    };
+  }
+
+  // Render Question to UI
+  function renderQuestion() {
+    currentQ = generateQuestion(currentBoss);
+    document.getElementById('formula-display').textContent = currentQ.formula;
+    document.getElementById('operations-guide').textContent = currentQ.operationDesc;
+    document.getElementById('hint-text').innerHTML = `<span class="material-symbols-outlined text-[14px] text-primary-container">lightbulb</span> ${currentQ.hint}`;
+    document.getElementById('combat-script-detail').textContent = `[${currentQ.formula.replace(' = ?', '')}] TARGET READY`;
+    document.getElementById('question-index-label').textContent = `QUESTION #${String(questionNumber).padStart(2, '0')} // CLIMAX STRIKE`;
+
+    // Render Answer Buttons
+    for (let i = 0; i < 4; i++) {
+      const btn = document.getElementById(`btn-opt-${i}`);
+      const txt = document.getElementById(`opt-text-${i}`);
+      if (txt) txt.textContent = currentQ.options[i];
+      if (btn) {
+        btn.classList.remove('bg-primary-container', 'text-on-primary-container', 'bg-secondary-container', 'text-on-secondary-container', 'border-primary-container', 'border-error');
+        btn.classList.add('bg-surface-container-high', 'border-outline-variant/40');
+      }
+    }
+
+    // Reset Timer for Question
+    totalTimeLimit = bossData[currentBoss].limitSeconds;
+    timeRemaining = totalTimeLimit;
+    updateTimerUI();
+    isAnswerLocked = false;
+  }
+
+  // Handle Answer Selection
+  function handleAnswerClick(index) {
+    if (isAnswerLocked || isGameOver) return;
+    const chosenVal = currentQ.options[index];
+    const isCorrect = chosenVal === currentQ.solution;
+    processAnswer(chosenVal, isCorrect, index);
+  }
+
+  // Process combat resolution
+  function processAnswer(chosenVal, isCorrect, buttonIndex = -1) {
+    isAnswerLocked = true;
+    totalQuestions++;
+    const b = bossData[currentBoss];
+    const targetBtn = buttonIndex >= 0 ? document.getElementById(`btn-opt-${buttonIndex}`) : null;
+
+    if (isCorrect) {
+      correctCount++;
+      playBeep('hit');
+
+      // Visual feedback on button
+      if (targetBtn) {
+        targetBtn.classList.remove('bg-surface-container-high');
+        targetBtn.classList.add('bg-primary-container', 'text-on-primary-container', 'border-primary-container');
+      }
+
+      // Combo & Damage Calculation
+      comboCount++;
+      if (comboCount > maxCombo) maxCombo = comboCount;
+      const baseDmg = b.damagePerHit;
+      const comboBonus = Math.floor(baseDmg * (comboCount * 0.15));
+      const finalDmg = baseDmg + comboBonus;
+      bossHp = Math.max(0, bossHp - finalDmg);
+
+      // Score & Domain Gauge
+      const scoreAdd = 500 + (comboCount * 50);
+      totalScore += scoreAdd;
+      domainGauge = Math.min(100, domainGauge + 20);
+
+      // Trigger Anime Slash Screen Visual (Player counter attack)
+      triggerSlashAnimation(true);
+
+      // Update UI
+      updateBossHpBar();
+      updateComboUI();
+      updateScoreUI();
+      updateDomainUI();
+
+      // Boss reaction dialog
+      document.getElementById('boss-dialogue-text').textContent = bossHp === 0 
+        ? b.dialogueWin 
+        : `"...อั่ก! การคำนวณเฉียบคมมาก โดนดาเมจสะบั้น ${finalDmg} แต้ม!"`;
+      document.getElementById('dialogue-mood').textContent = "STANCE: DEFLECTED";
+
+      updateFeedLog(`[HIT!] คำตอบ [${chosenVal}] ถูกต้อง! ฟันดาบเคาน์เตอร์สำเร็จ ดาเมจ ${finalDmg} พอยท์! COMBO x${comboCount}`);
+
+      // Check Boss Defeat
+      if (bossHp <= 0) {
+        setTimeout(() => triggerGameOver(true), 600);
+        return;
+      }
+
+      // Advance Question after short delay
+      setTimeout(() => {
+        questionNumber++;
+        renderQuestion();
+      }, 700);
+
+    } else {
+      // WRONG or TIMEOUT -> TRIGGER BOSS SIGNATURE ATTACK ANIMATION!
+      playBeep('wrong');
+
+      if (targetBtn) {
+        targetBtn.classList.remove('bg-surface-container-high');
+        targetBtn.classList.add('bg-secondary-container', 'text-on-secondary-container', 'border-error');
+      }
+
+      // Player Damage & Combo Reset
+      comboCount = 0;
+      playerHp = Math.max(0, playerHp - 25);
+      updateComboUI();
+      updatePlayerHpBar();
+      updateScoreUI();
+
+      // Trigger full dramatic signature move animation for current boss
+      triggerBossAttackAnimation(currentBoss);
+
+      // Voice Line & Dialogue
+      const voiceText = b.voiceWrong;
+      speakVoice(voiceText);
+      document.getElementById('boss-dialogue-text').textContent = b.dialogueWrong;
+      document.getElementById('dialogue-mood').textContent = "STANCE: ATTACKING";
+
+      updateFeedLog(`[MISS] คำตอบ ${chosenVal !== null ? chosenVal : 'หมดเวลา'} ผิดพลาด! ${b.name} โจมตีสวนกลับด้วย ${b.spell} -25 HP!`);
+
+      // 1.0s Boss Spell Charge Countdown Animation
+      runBossAttackCooldown(() => {
+        // Check Player Defeat
+        if (playerHp <= 0) {
+          triggerGameOver(false);
+          return;
+        }
+        questionNumber++;
+        renderQuestion();
+      });
+    }
+  }
+
+  // 1.0s Boss Cooldown Visual
+  function runBossAttackCooldown(callback) {
+    const cdBar = document.getElementById('spell-cooldown-bar');
+    const cdBadge = document.getElementById('spell-cd-badge');
+    if (cdBadge) cdBadge.textContent = "CHARGING: 1.0s STRIKE";
+    let start = Date.now();
+    const duration = 1000;
+
+    const interval = setInterval(() => {
+      const elapsed = Date.now() - start;
+      const progress = Math.min(100, (elapsed / duration) * 100);
+      if (cdBar) cdBar.style.width = progress + '%';
+
+      if (elapsed >= duration) {
+        clearInterval(interval);
+        if (cdBadge) cdBadge.textContent = "COOLDOWN: 1.0s";
+        if (callback) callback();
+      }
+    }, 50);
+  }
+
+  // Trigger Burst / Domain Expansion
+  function triggerBurst() {
+    if (domainGauge < 100 || isGameOver || isAnswerLocked) return;
+    playBeep('burst');
+    speakVoice("กางอาณาเขต!");
+
+    domainGauge = 0;
+    updateDomainUI();
+
+    const burstDmg = 900;
+    bossHp = Math.max(0, bossHp - burstDmg);
+    comboCount += 5;
+    totalScore += 2500;
+
+    triggerSlashAnimation(false);
+    updateBossHpBar();
+    updateComboUI();
+    updateScoreUI();
+
+    document.getElementById('boss-dialogue-text').textContent = `"อะไรกัน?! อาณาเขตคณิตศาสตร์ไร้ขีดจำกัด... พลังทำลายล้างนี่มันอะไรกัน!"`;
+    document.getElementById('dialogue-mood').textContent = "STANCE: DOMAIN TRAPPED";
+    updateFeedLog(`[ULTIMATE BURST] ปลดปล่อยอาณาเขตสมการสมบูรณ์แบบ! ดาเมจระเบิด ${burstDmg} แก่ ${bossData[currentBoss].name}!`);
+
+    if (bossHp <= 0) {
+      setTimeout(() => triggerGameOver(true), 600);
+    }
+  }
+
+  // Timer Countdown Loop
+  function startTimerLoop() {
+    if (timerInterval) clearInterval(timerInterval);
+
+    timerInterval = setInterval(() => {
+      if (isAnswerLocked || isGameOver) return;
+
+      timeRemaining -= 0.05;
+      if (timeRemaining <= 0) {
+        timeRemaining = 0;
+        updateTimerUI();
+        // Time expired trigger
+        processAnswer(null, false, -1);
+      } else {
+        updateTimerUI();
+      }
+    }, 50);
+  }
+
+  function updateTimerUI() {
+    const timerElem = document.getElementById('timer-text');
+    const timerBar = document.getElementById('timer-bar');
+    const timerBox = document.getElementById('timer-box');
+    const timerIcon = document.getElementById('timer-icon');
+
+    if (timerElem) timerElem.textContent = timeRemaining.toFixed(2) + 's';
+    const pct = Math.max(0, (timeRemaining / totalTimeLimit) * 100);
+    if (timerBar) timerBar.style.width = pct + '%';
+
+    // Danger state when less than 2s
+    if (timeRemaining <= 2.0 && timeRemaining > 0) {
+      if (timerBox) timerBox.classList.add('bg-error-container/40', 'border-error');
+      if (timerElem) timerElem.classList.add('animate-pulse');
+      if (timerIcon) timerIcon.classList.add('animate-bounce');
+    } else {
+      if (timerBox) timerBox.classList.remove('bg-error-container/40');
+      if (timerElem) timerElem.classList.remove('animate-pulse');
+      if (timerIcon) timerIcon.classList.remove('animate-bounce');
+    }
+  }
+
+  // Switch Boss / Difficulty
+  function switchBoss(bossKey) {
+    if (!bossData[bossKey]) return;
+    currentBoss = bossKey;
+
+    // Reset difficulty tabs
+    document.querySelectorAll('.difficulty-tab').forEach(tab => {
+      tab.classList.remove('active', 'bg-surface-container-high', 'border-primary-container/40');
+      tab.classList.add('bg-surface-container', 'opacity-80', 'border-transparent');
+      const ind = tab.querySelector('.active-indicator');
+      if (ind) ind.classList.add('hidden');
+    });
+
+    const activeBtn = document.getElementById('btn-' + bossKey);
+    if (activeBtn) {
+      activeBtn.classList.add('active', 'bg-surface-container-high', 'border-primary-container/40');
+      activeBtn.classList.remove('bg-surface-container', 'opacity-80', 'border-transparent');
+      const activeInd = activeBtn.querySelector('.active-indicator');
+      if (activeInd) activeInd.classList.remove('hidden');
+    }
+
+    const b = bossData[bossKey];
+    document.getElementById('boss-name').textContent = b.name;
+    document.getElementById('boss-epithet').textContent = b.epithet;
+    document.getElementById('boss-element').textContent = b.element;
+    document.getElementById('boss-badge').textContent = b.threat;
+    document.getElementById('boss-stance-tag').textContent = b.stance;
+    document.getElementById('spell-name').textContent = b.spell;
+    document.getElementById('boss-dialogue-text').textContent = b.dialogueNormal;
+    document.getElementById('dialogue-speaker').textContent = b.name.split(' ')[0].toUpperCase() + ' SAYS:';
+    document.getElementById('warning-subtext').textContent = b.warningText;
+    document.getElementById('boss-rule-text').textContent = b.ruleText;
+    document.getElementById('boss-rule-reward').textContent = `+${b.damagePerHit} DMG / HIT`;
+    document.getElementById('active-difficulty-tag').textContent = `${bossKey.toUpperCase()} TARGET ACTIVE`;
+    document.getElementById('difficulty-description').textContent = `${b.name}: ${b.ruleText} // เวลา ${b.limitSeconds} วินาที // สเปลคูลดาวน์ 1.0 วินาที`;
+
+    // Visual Accent glow
+    document.getElementById('boss-glow-bg').style.backgroundColor = b.bgAura;
+    const avatarImg = document.getElementById('boss-avatar-img');
+    if (avatarImg) {
+      avatarImg.src = b.avatarImg;
+      avatarImg.setAttribute('data-alt', b.avatarAlt);
+    }
+
+    // Reset combat state for this boss
+    resetBattle();
+  }
+
+  // Screen Visual Effects
+  function triggerSlashAnimation(isLight) {
+    const fx = document.getElementById('attack-slash-fx');
+    if (!fx) return;
+    fx.classList.remove('slash-active');
+    void fx.offsetWidth; // re-flow
+    fx.classList.add('slash-active');
+  }
+
+  function triggerScreenShake(isHeavy = false) {
+    const body = document.getElementById('battle-body');
+    if (!body) return;
+    body.classList.remove('shake-anim', 'rumble-anim');
+    void body.offsetWidth;
+    body.classList.add(isHeavy ? 'rumble-anim' : 'shake-anim');
+    setTimeout(() => body.classList.remove('shake-anim', 'rumble-anim'), isHeavy ? 750 : 450);
+  }
+
+  // UI Updaters
+  function updateBossHpBar() {
+    const pct = Math.max(0, (bossHp / maxBossHp) * 100);
+    const bar = document.getElementById('boss-hp-bar');
+    const txt = document.getElementById('boss-hp-numeric');
+    if (bar) bar.style.width = pct + '%';
+    if (txt) txt.textContent = `${bossHp.toLocaleString()} / ${maxBossHp.toLocaleString()} HP`;
+
+    if (pct < 30 && bar) {
+      bar.classList.remove('bg-primary-container');
+      bar.classList.add('bg-secondary-container');
+    } else if (bar) {
+      bar.classList.remove('bg-secondary-container');
+      bar.classList.add('bg-primary-container');
+    }
+  }
+
+  function updatePlayerHpBar() {
+    const bar = document.getElementById('player-hp-bar');
+    const txt = document.getElementById('player-hp-text');
+    if (bar) bar.style.width = playerHp + '%';
+    if (txt) txt.textContent = `${playerHp} / 100`;
+
+    if (playerHp < 35 && bar) {
+      bar.classList.remove('bg-primary-container');
+      bar.classList.add('bg-secondary-container');
+    } else if (bar) {
+      bar.classList.remove('bg-secondary-container');
+      bar.classList.add('bg-primary-container');
+    }
+  }
+
+  function updateComboUI() {
+    const comboElem = document.getElementById('combo-number');
+    const statusBadge = document.getElementById('combo-status-badge');
+    const bonusText = document.getElementById('combo-bonus-text');
+    if (comboElem) comboElem.textContent = comboCount;
+
+    if (comboCount >= 5) {
+      if (statusBadge) {
+        statusBadge.textContent = "CRITICAL DRIVE";
+        statusBadge.classList.remove('bg-surface-container-high');
+        statusBadge.classList.add('bg-secondary-container');
+      }
+      if (bonusText) bonusText.textContent = `CHAIN x${(1 + comboCount * 0.1).toFixed(2)} BONUS`;
+    } else if (comboCount > 0) {
+      if (statusBadge) {
+        statusBadge.textContent = "COMBO STRIKE";
+        statusBadge.classList.add('bg-surface-container-high');
+      }
+      if (bonusText) bonusText.textContent = `CHAIN ACTIVE`;
+    } else {
+      if (statusBadge) {
+        statusBadge.textContent = "COMBO BREAK";
+        statusBadge.classList.remove('bg-secondary-container');
+        statusBadge.classList.add('bg-surface-container-high');
+      }
+      if (bonusText) bonusText.textContent = "STRIKE READY";
+    }
+  }
+
+  function updateScoreUI() {
+    const sc = document.getElementById('metric-score');
+    const headerPill = document.getElementById('header-score-pill');
+    const roundPill = document.getElementById('round-score-pill');
+    const hitCount = document.getElementById('metric-correct-count');
+    const accElem = document.getElementById('metric-accuracy');
+
+    if (sc) sc.textContent = totalScore.toLocaleString();
+    if (headerPill) headerPill.textContent = `SCORE: ${totalScore.toLocaleString()}`;
+    if (roundPill) roundPill.textContent = `PTS: ${totalScore.toLocaleString()}`;
+    if (hitCount) hitCount.textContent = `${correctCount} hits`;
+
+    const acc = totalQuestions > 0 ? Math.round((correctCount / totalQuestions) * 100) : 100;
+    if (accElem) accElem.textContent = acc + '%';
+  }
+
+  function updateDomainUI() {
+    const bar = document.getElementById('domain-gauge-bar');
+    const txt = document.getElementById('domain-gauge-text');
+    const btn = document.getElementById('btn-burst');
+    const hint = document.getElementById('burst-instruction');
+
+    if (bar) bar.style.width = domainGauge + '%';
+    if (txt) txt.textContent = domainGauge + '%';
+
+    if (domainGauge >= 100) {
+      if (txt) txt.textContent = "MAX 100%";
+      if (btn) {
+        btn.classList.remove('bg-surface-container-high', 'text-on-surface-variant', 'cursor-not-allowed', 'opacity-60');
+        btn.classList.add('bg-primary-container', 'text-on-primary-container', 'shadow-[0_0_24px_rgba(0,240,255,0.6)]', 'cursor-pointer');
+      }
+      if (hint) hint.textContent = "⚡ READY! PRESS [SPACE] OR CLICK TO ACTIVATE INSTANT STRIKE!";
+    } else {
+      if (btn) {
+        btn.classList.remove('bg-primary-container', 'text-on-primary-container', 'shadow-[0_0_24px_rgba(0,240,255,0.6)]', 'cursor-pointer');
+        btn.classList.add('bg-surface-container-high', 'text-on-surface-variant', 'cursor-not-allowed', 'opacity-60');
+      }
+      if (hint) hint.textContent = "FILL GAUGE 100% TO ACTIVATE (OR PRESS SPACE)";
+    }
+  }
+
+  function updateFeedLog(msg) {
+    const logElem = document.getElementById('battle-feed-log');
+    if (logElem) logElem.textContent = msg;
+  }
+
+  // Toggle Audio
+  function toggleAudio() {
+    audioEnabled = !audioEnabled;
+    const label = document.getElementById('audio-label');
+    const icon = document.getElementById('audio-icon');
+    const hIcon = document.getElementById('header-audio-icon');
+
+    if (audioEnabled) {
+      if (label) label.textContent = 'SFX & VOICE: ON';
+      if (icon) icon.textContent = 'volume_up';
+      if (hIcon) hIcon.textContent = 'volume_up';
+      updateFeedLog('[AUDIO] ระบบเสียงเอฟเฟกต์และเสียงพากย์เปิดใช้งาน');
+    } else {
+      if (label) label.textContent = 'SFX & VOICE: MUTE';
+      if (icon) icon.textContent = 'volume_off';
+      if (hIcon) hIcon.textContent = 'volume_off';
+      updateFeedLog('[AUDIO] ปิดเสียงชั่วคราว');
+      if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+    }
+  }
+
+  function toggleFullscreen() {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(() => {});
+    } else {
+      if (document.exitFullscreen) document.exitFullscreen();
+    }
+  }
+
+  // Reset Battle
+  function resetBattle() {
+    bossHp = 2000;
+    maxBossHp = 2000;
+    playerHp = 100;
+    comboCount = 0;
+    totalScore = 0;
+    totalQuestions = 0;
+    correctCount = 0;
+    domainGauge = 30;
+    questionNumber = 1;
+    isGameOver = false;
+    isAnswerLocked = false;
+
+    updateBossHpBar();
+    updatePlayerHpBar();
+    updateComboUI();
+    updateScoreUI();
+    updateDomainUI();
+
+    const b = bossData[currentBoss];
+    document.getElementById('boss-dialogue-text').textContent = b.dialogueNormal;
+    document.getElementById('dialogue-mood').textContent = "STANCE: COMBAT";
+    updateFeedLog(`[SYSTEM RESET] เริ่มต้นสมรภูมิใหม่เรียบร้อยแล้ว เผชิญหน้ากับ ${b.name}!`);
+
+    renderQuestion();
+  }
+
+  // Game Over Handling (Victory or Defeat)
+  function triggerGameOver(isVictory) {
+    isGameOver = true;
+    if (timerInterval) clearInterval(timerInterval);
+
+    const modal = document.getElementById('result-modal');
+    const mTitle = document.getElementById('modal-title');
+    const mDesc = document.getElementById('modal-desc');
+    const mIcon = document.getElementById('modal-icon');
+    const mScore = document.getElementById('modal-score');
+    const mCombo = document.getElementById('modal-combo');
+    const mAcc = document.getElementById('modal-acc');
+    const acc = totalQuestions > 0 ? Math.round((correctCount / totalQuestions) * 100) : 100;
+
+    if (mScore) mScore.textContent = totalScore.toLocaleString();
+    if (mCombo) mCombo.textContent = `${maxCombo}x`;
+    if (mAcc) mAcc.textContent = `${acc}%`;
+
+    if (isVictory) {
+      if (mTitle) {
+        mTitle.textContent = "VICTORY ACHIEVED!";
+        mTitle.className = "font-display-hero text-[36px] leading-[40px] uppercase font-bold text-primary mb-2";
+      }
+      if (mDesc) mDesc.textContent = `ยินดีด้วย! คุณสามารถคำนวณและสยบ ${bossData[currentBoss].name} ได้อย่างสมบูรณ์แบบ!`;
+      if (mIcon) {
+        mIcon.textContent = "emoji_events";
+        mIcon.className = "material-symbols-outlined text-[48px] text-primary-container";
+      }
+      speakVoice("สุดยอดเลย คุณชนะแล้ว!");
+    } else {
+      if (mTitle) {
+        mTitle.textContent = "DEFEAT / จิตวิญญาณแตกสลาย";
+        mTitle.className = "font-display-hero text-[36px] leading-[40px] uppercase font-bold text-secondary mb-2";
+      }
+      if (mDesc) mDesc.textContent = `พลังวิญญาณของผู้เล่นหมดลง! บอส ${bossData[currentBoss].name} โจมตีจนพ่ายแพ้`;
+      if (mIcon) {
+        mIcon.textContent = "heart_broken";
+        mIcon.className = "material-symbols-outlined text-[48px] text-secondary";
+      }
+      speakVoice("พ่ายแพ้แล้ว เอาใหม่นะ");
+    }
+
+    if (modal) modal.classList.remove('hidden');
+  }
+
+  function closeResultModal() {
+    const modal = document.getElementById('result-modal');
+    if (modal) modal.classList.add('hidden');
+  }
+
+  // Keyboard Shortcuts (1, 2, 3, 4, Space, R)
+  window.addEventListener('keydown', (e) => {
+    if (isGameOver) {
+      if (e.key === 'Enter' || e.key === 'r' || e.key === 'R') {
+        resetBattle();
+        closeResultModal();
+      }
+      return;
+    }
+
+    if (e.key === '1') handleAnswerClick(0);
+    if (e.key === '2') handleAnswerClick(1);
+    if (e.key === '3') handleAnswerClick(2);
+    if (e.key === '4') handleAnswerClick(3);
+    if (e.code === 'Space') {
+      e.preventDefault();
+      triggerBurst();
+    }
+    if (e.key === 'r' || e.key === 'R') {
+      resetBattle();
+    }
+  });
+
+  // Initialize Game on Mount
+  document.addEventListener('DOMContentLoaded', () => {
+    renderQuestion();
+    startTimerLoop();
+  });
+</script></div></main><footer class="w-full bg-surface-container-lowest/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="max-w-7xl mx-auto px-6 py-space-lg flex flex-col md:flex-row items-center justify-between gap-space-md"><div class="flex items-center gap-space-lg"><div class="flex items-center gap-space-xs"><span class="w-2 h-2 rounded-full bg-primary-container animate-pulse shadow-[0_0_8px_#00f0ff]"></span><span class="font-label-hud text-label-hud uppercase text-primary">CLUSTER ASIA-EAST [ONLINE]</span></div><div class="flex items-center gap-space-xs"><span class="font-label-hud text-label-hud text-on-surface-variant">WARRIORS ENGAGED:</span><span class="font-label-hud text-label-hud font-bold text-secondary-fixed-dim">18,420 ACTIVE</span></div><div class="hidden sm:flex items-center gap-space-xs"><span class="font-label-micro text-label-micro text-on-surface-variant">LATENCY:</span><span class="font-label-micro text-label-micro text-primary-container font-bold">14ms</span></div></div><div class="flex items-center gap-space-sm"><button class="px-space-md py-space-xs rounded-DEFAULT bg-surface-container-high hover:bg-surface-bright text-on-surface-variant hover:text-on-surface font-label-hud text-label-hud uppercase transition-colors flex items-center gap-1" type="button"><span class="material-symbols-outlined text-[16px]">terminal</span><span>COMBAT LOG</span></button><button class="px-space-md py-space-xs rounded-DEFAULT bg-surface-container-high hover:bg-surface-bright text-on-surface-variant hover:text-on-surface font-label-hud text-label-hud uppercase transition-colors flex items-center gap-1" type="button"><span class="material-symbols-outlined text-[16px]">shield</span><span>GUILD PROTOCOL</span></button><button class="px-space-md py-space-xs rounded-DEFAULT bg-primary-container hover:bg-primary text-on-primary-container font-label-hud text-label-hud font-bold uppercase transition-colors flex items-center gap-1 shadow-[0_0_16px_rgba(0,240,255,0.4)]" onclick="resetBattle()" type="button"><span class="material-symbols-outlined text-[16px]">flash_on</span><span>INSTANT MATCH</span></button></div></div><div class="w-full bg-surface-container-low py-space-xs"><div class="max-w-7xl mx-auto px-6 flex items-center justify-between text-on-surface-variant font-label-micro text-label-micro"><span>© 2025 ANIME MATH ARENA ENGINE // QUANTUM SHONEN LABS</span><span class="uppercase tracking-widest text-outline">TACTICAL COMPUTATION PROTOCOL // ZERO DEFECT RATE</span></div></div></footer></body></html>
