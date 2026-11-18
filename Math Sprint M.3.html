@@ -1,0 +1,1290 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#090d16">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Math Sprint ม.3">
+    <link id="pwa-manifest" rel="manifest" href="">
+    <title>Math Sprint ม.3 ⚡ แอปศึกประลองความเร็วคณิตศาสตร์</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Prompt', sans-serif;
+            touch-action: manipulation;
+        }
+        .font-math {
+            font-family: 'Fredoka One', cursive, sans-serif;
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-8px); }
+            40%, 80% { transform: translateX(8px); }
+        }
+        .animate-shake {
+            animation: shake 0.35s ease-in-out;
+        }
+        @keyframes popIn {
+            0% { transform: scale(0.85); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .animate-pop {
+            animation: popIn 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+        @keyframes floatSlow {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-7px); }
+        }
+        .animate-float {
+            animation: floatSlow 3.2s ease-in-out infinite;
+        }
+        @keyframes spinSlow {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .animate-spin-slow {
+            animation: spinSlow 18s linear infinite;
+        }
+        @keyframes slashFlash {
+            0% { opacity: 0; transform: scale(0.6) rotate(-15deg); }
+            35% { opacity: 1; transform: scale(1.1) rotate(0deg); }
+            100% { opacity: 0; transform: scale(1.25) rotate(8deg); }
+        }
+        .animate-slash {
+            animation: slashFlash 0.38s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        @keyframes orbHover {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-6px); }
+        }
+        .orb-bob {
+            animation: orbHover 2.2s ease-in-out infinite;
+        }
+        /* ซ่อนแถบเลื่อนเพื่อให้ดูเหมือนแอปมือถือแท้ๆ */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-slate-950 h-[100dvh] w-screen text-white flex items-center justify-center overflow-hidden select-none">
+
+    <!-- กรอบแอปพลิเคชันมือถือเต็มจอ (Mobile App Shell) -->
+    <div id="app-shell" class="w-full max-w-md h-full sm:h-[92dvh] sm:max-h-[820px] bg-gradient-to-b from-slate-900 via-indigo-950/90 to-slate-950 sm:border-2 sm:border-indigo-500/40 sm:rounded-[2.5rem] shadow-[0_0_60px_rgba(79,70,229,0.3)] flex flex-col justify-between overflow-hidden relative">
+
+        <!-- แถบหัวแอปด้านบน (App Top Header) -->
+        <header id="app-header" class="px-5 pt-4 pb-2.5 bg-slate-950/60 backdrop-blur-md border-b border-indigo-500/20 flex items-center justify-between shrink-0 z-40">
+            <div class="flex items-center gap-2.5">
+                <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-cyan-500 to-indigo-600 flex items-center justify-center shadow-md font-math text-sm font-bold">
+                    M3
+                </div>
+                <div>
+                    <h2 class="font-math text-sm font-bold tracking-wide text-white leading-none">MATH SPRINT</h2>
+                    <span class="text-[10px] text-cyan-400 font-medium">เวอร์ชันแอปพลิเคชัน 2.0</span>
+                </div>
+            </div>
+            <button onclick="openInstallModal()" class="px-3 py-1.5 rounded-full bg-indigo-500/20 hover:bg-indigo-500/30 border border-indigo-400/40 text-indigo-200 text-[11px] font-semibold flex items-center gap-1 transition active:scale-95">
+                <span>📲</span>
+                <span>ติดตั้งแอป</span>
+            </button>
+        </header>
+
+        <!-- พื้นที่เนื้อหาหลักของแอป (Scrollable Main Area) -->
+        <main class="flex-1 overflow-y-auto no-scrollbar p-4 flex flex-col justify-center relative">
+
+            <!-- ================= 1. หน้าจอเมนูหลัก (Start Menu) ================= -->
+            <div id="start-screen" class="w-full text-center relative">
+                <div class="absolute -top-16 -left-16 w-40 h-40 bg-indigo-500/20 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="absolute -bottom-16 -right-16 w-40 h-40 bg-cyan-500/20 rounded-full blur-3xl pointer-events-none"></div>
+
+                <!-- ภาพประกอบตัวละครอนิเมะประจำหน้าเมนูหลัก -->
+                <div class="relative w-24 h-24 mx-auto mb-2 flex items-center justify-center">
+                    <svg class="w-24 h-24 absolute inset-0 text-cyan-400/35 animate-spin-slow" viewBox="0 0 120 120" fill="none">
+                        <circle cx="60" cy="60" r="54" stroke="currentColor" stroke-width="1.5" stroke-dasharray="6 4"/>
+                        <circle cx="60" cy="60" r="44" stroke="currentColor" stroke-width="1"/>
+                        <polygon points="60,8 105,86 15,86" stroke="currentColor" stroke-width="1" fill="none"/>
+                        <polygon points="60,112 105,34 15,34" stroke="currentColor" stroke-width="1" fill="none"/>
+                    </svg>
+                    <svg class="w-20 h-20 relative z-10 animate-float drop-shadow-[0_6px_16px_rgba(56,189,248,0.5)]" viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M35 65 C25 90, 28 115, 42 122 C45 105, 45 90, 50 80 Z" fill="#1e293b"/>
+                        <path d="M105 65 C115 90, 112 115, 98 122 C95 105, 95 90, 90 80 Z" fill="#1e293b"/>
+                        <path d="M44 128 C46 105, 56 98, 70 98 C84 98, 94 105, 96 128 Z" fill="#0f172a" stroke="#38bdf8" stroke-width="2"/>
+                        <path d="M58 98 L70 116 L82 98" fill="#e0f2fe"/>
+                        <path d="M70 105 L66 124 L70 128 L74 124 Z" fill="#38bdf8"/>
+                        <rect x="64" y="86" width="12" height="14" rx="5" fill="#fde6d8"/>
+                        <path d="M45 58 C45 36, 95 36, 95 58 C95 80, 82 92, 70 92 C58 92, 45 80, 45 58 Z" fill="#fff1e6"/>
+                        <ellipse cx="57" cy="64" rx="5.5" ry="7" fill="#0284c7"/>
+                        <ellipse cx="57" cy="65" rx="3.5" ry="4.5" fill="#0f172a"/>
+                        <circle cx="55" cy="61" r="2.2" fill="#ffffff"/>
+                        <ellipse cx="83" cy="64" rx="5.5" ry="7" fill="#0284c7"/>
+                        <ellipse cx="83" cy="65" rx="3.5" ry="4.5" fill="#0f172a"/>
+                        <circle cx="81" cy="61" r="2.2" fill="#ffffff"/>
+                        <path d="M66 79 Q70 83 74 79" stroke="#e11d48" stroke-width="2" stroke-linecap="round" fill="none"/>
+                        <path d="M38 62 C36 30, 58 20, 70 20 C82 20, 104 30, 102 62 C98 48, 92 43, 88 56 C85 45, 78 42, 74 58 C70 44, 64 44, 60 57 C55 43, 46 47, 38 62 Z" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1"/>
+                    </svg>
+                </div>
+
+                <h1 class="font-math text-2xl sm:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-indigo-300 to-purple-400 mb-1">
+                    MATH SPRINT M.3
+                </h1>
+                <p class="text-xs text-slate-300 mb-4">
+                    เลือกตัวละครและระดับความยากเพื่อเข้าสู่สนามประลอง!
+                </p>
+
+                <!-- ตัวเลือกเลือกระดับความยาก -->
+                <div class="space-y-2.5 text-left">
+                    <button onclick="startGame('easy')" class="w-full py-2.5 px-3.5 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 border border-emerald-400/40 font-bold text-sm flex items-center justify-between shadow-lg transition-all active:scale-95">
+                        <span class="flex items-center gap-2.5">
+                            <span class="w-10 h-10 rounded-xl bg-emerald-950/50 border border-emerald-300/40 flex items-center justify-center shrink-0">
+                                <svg class="w-8 h-8" viewBox="0 0 40 40" fill="none">
+                                    <path d="M9 17 C6 26, 7 34, 11 37 L29 37 C33 34, 34 26, 31 17 Z" fill="#38bdf8"/>
+                                    <circle cx="20" cy="21" r="9.5" fill="#fff1e6"/>
+                                    <ellipse cx="28" cy="12" rx="4.5" ry="3.5" transform="rotate(20 28 12)" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1"/>
+                                    <path d="M26 11 L29 12" stroke="#e11d48" stroke-width="1.2" stroke-linecap="round"/>
+                                    <path d="M10 19 C10 10, 30 10, 30 19 C26 15, 22 16, 20 18 C18 16, 14 15, 10 19 Z" fill="#7dd3fc"/>
+                                    <circle cx="16.5" cy="21.5" r="1.8" fill="#eab308"/>
+                                    <circle cx="23.5" cy="21.5" r="1.8" fill="#eab308"/>
+                                    <path d="M18 25 Q20 26.8 22 25" stroke="#be123c" stroke-width="1.4" stroke-linecap="round"/>
+                                </svg>
+                            </span>
+                            <span class="flex flex-col">
+                                <span>ระดับง่าย (Easy)</span>
+                                <span class="text-[11px] font-normal text-emerald-100">⚔️ ริมุรุ เทมเพสต์</span>
+                            </span>
+                        </span>
+                        <span class="text-[11px] bg-emerald-950/60 px-2.5 py-1 rounded-xl text-emerald-200">+ - × ÷</span>
+                    </button>
+
+                    <button onclick="startGame('medium')" class="w-full py-2.5 px-3.5 rounded-2xl bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-500 hover:to-orange-500 border border-amber-400/40 font-bold text-sm flex items-center justify-between shadow-lg transition-all active:scale-95">
+                        <span class="flex items-center gap-2.5">
+                            <span class="w-10 h-10 rounded-xl bg-rose-950/80 border border-rose-400/50 flex items-center justify-center shrink-0">
+                                <svg class="w-8 h-8" viewBox="0 0 40 40" fill="none">
+                                    <circle cx="20" cy="22" r="11" fill="#fff1e6"/>
+                                    <path d="M8 19 C9 9, 31 9, 32 19 C28 13, 24 14, 20 17 C16 14, 12 13, 8 19 Z" fill="#f472b6"/>
+                                    <path d="M16 14 L20 17 L24 14" stroke="#0f172a" stroke-width="1.5"/>
+                                    <circle cx="16" cy="21" r="1.6" fill="#dc2626"/>
+                                    <circle cx="24" cy="21" r="1.6" fill="#dc2626"/>
+                                </svg>
+                            </span>
+                            <span class="flex flex-col">
+                                <span>ระดับปานกลาง (Medium)</span>
+                                <span class="text-[11px] font-normal text-amber-100">⚔️ สุคุนะ (ท่าผ่าโลก)</span>
+                            </span>
+                        </span>
+                        <span class="text-[11px] bg-amber-950/60 px-2.5 py-1 rounded-xl text-amber-200">จำนวนเต็มลบ</span>
+                    </button>
+
+                    <button onclick="startGame('hard')" class="w-full py-2.5 px-3.5 rounded-2xl bg-gradient-to-r from-rose-600 to-purple-600 hover:from-rose-500 hover:to-purple-500 border border-rose-400/40 font-bold text-sm flex items-center justify-between shadow-lg transition-all active:scale-95">
+                        <span class="flex items-center gap-2.5">
+                            <span class="w-10 h-10 rounded-xl bg-purple-950/80 border border-purple-300/40 flex items-center justify-center shrink-0">
+                                <svg class="w-8 h-8" viewBox="0 0 40 40" fill="none">
+                                    <circle cx="20" cy="23" r="10.5" fill="#fff1e6"/>
+                                    <rect x="9" y="18" width="22" height="6.5" rx="2" fill="#000000"/>
+                                    <path d="M8 18 L12 7 L17 14 L20 5 L23 14 L28 7 L32 18 Z" fill="#e0f2fe"/>
+                                </svg>
+                            </span>
+                            <span class="flex flex-col">
+                                <span>ระดับยาก (โหมด ม.3)</span>
+                                <span class="text-[11px] font-normal text-purple-200">🟣 โกโจ ซาโตรุ (มุราซากิ)</span>
+                            </span>
+                        </span>
+                        <span class="text-[11px] bg-purple-950/60 px-2.5 py-1 rounded-xl text-purple-200">ม.3 ครบชุด</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- ================= แท็บ 2: หน้าคู่มือและตัวละคร (Guide Screen) ================= -->
+            <div id="guide-screen" class="w-full hidden space-y-3">
+                <h3 class="font-math text-xl font-bold text-cyan-300 text-center mb-2">📖 คู่มือ & สกิลตัวละคร</h3>
+                <div class="bg-slate-900/80 border border-emerald-500/30 rounded-2xl p-3.5 text-xs space-y-1">
+                    <div class="font-bold text-emerald-400 text-sm">🟢 ริมุรุ เทมเพสต์ (โหมดง่าย)</div>
+                    <p class="text-slate-300">ฟาดดาบคาตานะเทมเพสต์ ปล่อยคลื่นดาบจันทร์เสี้ยวสีฟ้า-ม่วงเข้าฟันเป้าหมายคำตอบพื้นฐาน (+ - × ÷)</p>
+                </div>
+                <div class="bg-slate-900/80 border border-rose-500/30 rounded-2xl p-3.5 text-xs space-y-1">
+                    <div class="font-bold text-rose-400 text-sm">🔥 เรียวเมน สุคุนะ (โหมดปานกลาง)</div>
+                    <p class="text-slate-300">ปลดปล่อย "ท่าผ่าโลก (World Cutting Slash)" ผ่ามิติสีดำ-แดงเพลิงพร้อมเสียงฟันคมกริบ สำหรับโจทย์จำนวนเต็มลบ</p>
+                </div>
+                <div class="bg-slate-900/80 border border-purple-500/30 rounded-2xl p-3.5 text-xs space-y-1">
+                    <div class="font-bold text-purple-400 text-sm">🟣 โกโจ ซาโตรุ (โหมดยาก ม.3)</div>
+                    <p class="text-slate-300">ผสานไสยเวทสีฟ้าและสีแดงหลอมรวมเป็น "มุราซากิ" ยิงทำลายเป้าหมายโจทย์ผสม รากที่สอง และสมการ ม.3</p>
+                </div>
+            </div>
+
+            <!-- ================= แท็บ 3: หน้าสถิติคะแนนสูงสุด (Stats Screen) ================= -->
+            <div id="stats-screen" class="w-full hidden space-y-3 text-center">
+                <h3 class="font-math text-xl font-bold text-amber-300 mb-2">🏆 สถิติสูงสุดของคุณ</h3>
+                <div class="grid grid-cols-2 gap-3">
+                    <div class="bg-slate-900/80 border border-indigo-500/30 rounded-2xl p-4">
+                        <div class="text-[11px] text-slate-400">คะแนนสูงสุด</div>
+                        <div id="stat-best-score" class="font-math text-2xl font-bold text-cyan-400 mt-1">0</div>
+                    </div>
+                    <div class="bg-slate-900/80 border border-indigo-500/30 rounded-2xl p-4">
+                        <div class="text-[11px] text-slate-400">คอมโบสูงสุด</div>
+                        <div id="stat-best-combo" class="font-math text-2xl font-bold text-purple-400 mt-1">x1</div>
+                    </div>
+                    <div class="bg-slate-900/80 border border-indigo-500/30 rounded-2xl p-4 col-span-2">
+                        <div class="text-[11px] text-slate-400">จำนวนข้อที่ตอบถูกสะสม (รอบนี้)</div>
+                        <div id="stat-total-correct" class="font-math text-2xl font-bold text-emerald-400 mt-1">0 ข้อ</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ================= 2. หน้าจอเล่นเกม (Game Screen) ================= -->
+            <div id="game-screen" class="w-full h-full hidden flex-col justify-between gap-2.5 relative">
+                
+                <div class="flex items-center justify-between bg-slate-950/80 border border-slate-800 rounded-2xl px-3 py-2 shrink-0">
+                    <div class="flex items-center gap-2.5">
+                        <button onclick="returnToMenu()" class="px-2.5 py-1.5 bg-slate-800 hover:bg-rose-600 text-xs font-bold rounded-xl transition active:scale-95">
+                            ⬅ ออก
+                        </button>
+                        <div class="flex flex-col">
+                            <span class="text-[9px] text-slate-400 uppercase font-semibold">คะแนน</span>
+                            <span id="score-display" class="font-math text-lg font-bold text-cyan-400 leading-none">0</span>
+                        </div>
+                    </div>
+
+                    <div id="lives-display" class="flex items-center gap-0.5 text-base">
+                        ❤️ ❤️ ❤️
+                    </div>
+
+                    <div class="flex items-center gap-3">
+                        <div class="flex flex-col items-end">
+                            <span class="text-[9px] text-slate-400 uppercase font-semibold">คอมโบ</span>
+                            <span id="combo-display" class="font-math text-base font-bold text-purple-400 leading-none">x1</span>
+                        </div>
+                        <div class="flex flex-col items-end">
+                            <span class="text-[9px] text-slate-400 uppercase font-semibold">เวลา</span>
+                            <span id="timer-display" class="font-math text-base font-bold text-amber-400 leading-none">45s</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-y-1 shrink-0">
+                    <div class="flex justify-between items-center text-[11px] px-1">
+                        <span id="difficulty-badge" class="font-semibold text-indigo-300">ระดับ: ง่าย</span>
+                        <span id="question-hint" class="text-slate-400">คำนวณหาคำตอบที่ถูกต้อง</span>
+                    </div>
+                    <div class="w-full h-2 bg-slate-950 rounded-full overflow-hidden border border-slate-800">
+                        <div id="time-bar" class="h-full bg-gradient-to-r from-cyan-400 to-indigo-500 transition-all duration-300" style="width: 100%;"></div>
+                    </div>
+                </div>
+
+                <div id="question-card" class="bg-gradient-to-b from-slate-800/90 to-slate-900/95 border-2 border-indigo-500/30 rounded-2xl py-3 px-3 flex flex-col items-center justify-center shadow-inner relative min-h-[84px] shrink-0">
+                    <div id="feedback-badge" class="absolute top-1.5 text-[11px] font-bold px-2.5 py-0.5 rounded-full opacity-0 transition-opacity duration-200">
+                        +10 คะแนน!
+                    </div>
+                    <div id="question-text" class="font-math text-2xl sm:text-3xl font-extrabold text-white tracking-wide text-center">
+                        12 + 8 = ?
+                    </div>
+                </div>
+
+                <div id="battle-arena" class="relative w-full flex-1 min-h-[240px] bg-gradient-to-b from-slate-950/90 via-indigo-950/60 to-slate-950/95 border-2 border-cyan-500/30 rounded-3xl overflow-hidden shadow-inner select-none">
+                    <div class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-15">
+                        <svg class="w-52 h-52 text-cyan-400 animate-spin-slow" viewBox="0 0 120 120" fill="none">
+                            <circle cx="60" cy="60" r="54" stroke="currentColor" stroke-width="1.5" stroke-dasharray="6 4"/>
+                            <polygon points="60,8 105,86 15,86" stroke="currentColor" stroke-width="1" fill="none"/>
+                            <polygon points="60,112 105,34 15,34" stroke="currentColor" stroke-width="1" fill="none"/>
+                        </svg>
+                    </div>
+
+                    <div id="floating-targets-layer" class="absolute inset-0 z-10"></div>
+                    <div id="slash-effects-layer" class="absolute inset-0 z-20 pointer-events-none"></div>
+
+                    <div class="absolute bottom-1 left-0 right-0 flex flex-col items-center justify-end z-30 pointer-events-none">
+                        <div id="rimuru-sword-wrap" class="transition-transform duration-150 origin-bottom flex flex-col items-center">
+                            
+                            <!-- SVG ริมุรุ เทมเพสต์ แท้ๆ (โหมดง่าย) -->
+                            <svg id="character-rimuru-svg" class="w-28 h-24 drop-shadow-[0_0_16px_rgba(56,189,248,0.85)]" viewBox="0 0 160 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="80" cy="70" r="48" fill="#0284c7" opacity="0.22"/>
+                                <circle cx="80" cy="70" r="36" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="6 4" opacity="0.75"/>
+                                <path d="M48 42 C36 65, 34 98, 42 122 L118 122 C126 98, 124 65, 112 42 Z" fill="#38bdf8" stroke="#0284c7" stroke-width="1.2"/>
+                                <path d="M44 125 C48 92, 62 82, 80 82 C98 82, 112 92, 116 125 Z" fill="#0f172a" stroke="#eab308" stroke-width="1.8"/>
+                                <path d="M68 85 L80 122 L92 85" fill="#1e293b"/>
+                                <path d="M56 80 Q80 94 104 80 L100 92 Q80 104 60 92 Z" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.2"/>
+                                <path d="M62 90 L56 116 L66 118 L70 93 Z" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1"/>
+                                <rect x="72" y="70" width="16" height="14" rx="5" fill="#fde6d8"/>
+                                <path d="M53 48 C53 26, 107 26, 107 48 C107 70, 94 82, 80 82 C66 82, 53 70, 53 48 Z" fill="#fff1e6"/>
+                                <ellipse cx="67" cy="54" rx="5.8" ry="7" fill="#eab308"/>
+                                <ellipse cx="67" cy="55" rx="3.2" ry="4.2" fill="#422006"/>
+                                <circle cx="65" cy="51" r="2.2" fill="#ffffff"/>
+                                <ellipse cx="93" cy="54" rx="5.8" ry="7" fill="#eab308"/>
+                                <ellipse cx="93" cy="55" rx="3.2" ry="4.2" fill="#422006"/>
+                                <circle cx="91" cy="51" r="2.2" fill="#ffffff"/>
+                                <ellipse cx="59" cy="63" rx="4" ry="2" fill="#fda4af" opacity="0.65"/>
+                                <ellipse cx="101" cy="63" rx="4" ry="2" fill="#fda4af" opacity="0.65"/>
+                                <path d="M75 68 Q80 72 85 68" stroke="#be123c" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+                                <path d="M47 52 C45 20, 66 11, 80 11 C94 11, 115 20, 113 52 C106 39, 98 37, 94 49 C90 38, 84 37, 80 50 C76 37, 70 38, 66 49 C62 37, 54 39, 47 52 Z" fill="#7dd3fc" stroke="#0284c7" stroke-width="1.2"/>
+                                <g transform="translate(102, 24) rotate(22)">
+                                    <ellipse cx="0" cy="0" rx="11" ry="8.5" fill="#ffffff" stroke="#94a3b8" stroke-width="1.2"/>
+                                    <path d="M-5 -2 L-1 -1 M1 -1 L5 -2" stroke="#e11d48" stroke-width="1.6" stroke-linecap="round"/>
+                                    <circle cx="-3" cy="1" r="1" fill="#0f172a"/>
+                                    <circle cx="3" cy="1" r="1" fill="#0f172a"/>
+                                </g>
+                                <path d="M98 88 L114 72" stroke="#fde6d8" stroke-width="5.5" stroke-linecap="round"/>
+                                <line x1="108" y1="78" x2="117" y2="69" stroke="#1e293b" stroke-width="4" stroke-linecap="round"/>
+                                <ellipse cx="118" cy="68" rx="5" ry="2.2" transform="rotate(-45 118 68)" fill="#eab308"/>
+                                <path d="M119 67 L148 34 L144 31 L116 65 Z" fill="#e0f2fe" stroke="#38bdf8" stroke-width="1"/>
+                            </svg>
+
+                            <!-- SVG เรียวเมน สุคุนะ (โหมดปานกลาง) -->
+                            <svg id="character-sukuna-svg" class="hidden w-28 h-24 drop-shadow-[0_0_16px_rgba(225,29,72,0.85)]" viewBox="0 0 140 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="70" cy="65" r="46" fill="#be123c" opacity="0.22"/>
+                                <circle cx="70" cy="65" r="34" stroke="#f43f5e" stroke-width="1.5" stroke-dasharray="6 4" opacity="0.7"/>
+                                <path d="M32 118 C36 88, 50 78, 70 78 C90 78, 104 88, 108 118 Z" fill="#f8fafc" stroke="#0f172a" stroke-width="2.5"/>
+                                <rect x="61" y="65" width="18" height="16" rx="4" fill="#fde6d8"/>
+                                <path d="M47 44 C47 22, 93 22, 93 44 C93 64, 81 74, 70 74 C59 74, 47 64, 47 44 Z" fill="#fff1e6" stroke="#1e293b" stroke-width="1.5"/>
+                                <path d="M62 29 L70 35 L78 29" stroke="#0f172a" stroke-width="2.4" stroke-linecap="round"/>
+                                <ellipse cx="58" cy="43" rx="4.5" ry="3" fill="#ffffff" stroke="#0f172a" stroke-width="1.2"/>
+                                <circle cx="58" cy="43" r="2" fill="#dc2626"/>
+                                <ellipse cx="82" cy="43" rx="4.5" ry="3" fill="#ffffff" stroke="#0f172a" stroke-width="1.2"/>
+                                <circle cx="82" cy="43" r="2" fill="#dc2626"/>
+                                <path d="M61 60 Q70 67 79 60" stroke="#0f172a" stroke-width="2.2" stroke-linecap="round" fill="#991b1b"/>
+                                <path d="M44 43 C42 20, 56 11, 70 11 C84 11, 98 20, 96 43 Z" fill="#f472b6" stroke="#be185d" stroke-width="1.2"/>
+                                <path d="M92 92 L106 76 L112 80 L98 98 Z" fill="#fde6d8" stroke="#0f172a" stroke-width="1.5"/>
+                            </svg>
+
+                            <!-- SVG โกโจ ซาโตรุ (โหมดยาก) -->
+                            <svg id="character-gojo-svg" class="hidden w-28 h-24 drop-shadow-[0_0_18px_rgba(168,85,247,0.85)]" viewBox="0 0 140 125" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="70" cy="65" r="48" fill="#7c3aed" opacity="0.22"/>
+                                <circle cx="70" cy="65" r="36" stroke="#a855f7" stroke-width="1.5" stroke-dasharray="6 4" opacity="0.75"/>
+                                <path d="M34 122 C38 90, 52 80, 70 80 C88 80, 102 90, 106 122 Z" fill="#0f172a" stroke="#a855f7" stroke-width="2"/>
+                                <rect x="61" y="68" width="18" height="15" rx="4" fill="#fde6d8"/>
+                                <path d="M47 45 C47 24, 93 24, 93 45 C93 64, 81 74, 70 74 C59 74, 47 64, 47 45 Z" fill="#fff1e6" stroke="#1e293b" stroke-width="1.5"/>
+                                <rect x="44" y="40" width="52" height="13" rx="3" fill="#090d16" stroke="#38bdf8" stroke-width="1"/>
+                                <path d="M42 42 C40 18, 56 10, 70 10 C84 10, 100 18, 98 42 Z" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.2"/>
+                                <circle cx="70" cy="92" r="10" fill="#a855f7" opacity="0.6" class="animate-pulse"/>
+                            </svg>
+                        </div>
+                        <span id="rimuru-blade-tag" class="text-[10px] font-semibold text-cyan-300/90 -mt-1 tracking-wide bg-slate-950/80 px-2.5 py-0.5 rounded-full border border-cyan-500/20">⚔️ แตะเป้าหมายลอยได้เพื่อปล่อยพลังโจมตี</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ================= 3. หน้าจอสรุปผลคะแนน ================= -->
+            <div id="gameover-screen" class="w-full text-center hidden">
+                <div class="text-4xl mb-2">🏆</div>
+                <h2 class="font-math text-2xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-amber-300 to-rose-400 mb-1">
+                    จบการประลอง!
+                </h2>
+                <p id="gameover-reason" class="text-xs text-slate-300 mb-4">หมดเวลาแล้ว!</p>
+
+                <div class="bg-slate-950/80 border border-slate-800 rounded-2xl p-4 mb-5 space-y-2 text-sm">
+                    <div class="flex justify-between items-center">
+                        <span class="text-slate-400">ระดับความยาก:</span>
+                        <span id="final-difficulty" class="font-bold text-indigo-300">ง่าย</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-slate-400">คะแนนรวม:</span>
+                        <span id="final-score" class="font-math text-2xl font-bold text-cyan-400">0</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-slate-400">ตอบถูกทั้งหมด:</span>
+                        <span id="final-correct" class="font-bold text-emerald-400">0 ข้อ</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-slate-400">คอมโบสูงสุด:</span>
+                        <span id="final-max-combo" class="font-bold text-purple-400">x1</span>
+                    </div>
+                </div>
+
+                <div class="space-y-2">
+                    <button onclick="restartSameDifficulty()" class="w-full py-3 rounded-2xl bg-gradient-to-r from-cyan-500 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 font-bold text-sm shadow-lg transition active:scale-95">
+                        ⚔️ เล่นระดับเดิมอีกครั้ง
+                    </button>
+                    <button onclick="returnToMenu()" class="w-full py-2.5 rounded-2xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold text-xs transition active:scale-95">
+                        🏠 กลับไปเลือกระดับความยาก
+                    </button>
+                </div>
+            </div>
+        </main>
+
+        <!-- แถบนำทางด้านล่างสไตล์แอปมือถือ (Bottom Navigation Bar) -->
+        <nav id="app-bottom-nav" class="px-4 py-2 bg-slate-950/90 backdrop-blur-md border-t border-indigo-500/20 grid grid-cols-3 gap-2 shrink-0 z-40">
+            <button id="nav-home" onclick="switchTab('home')" class="flex flex-col items-center justify-center py-1.5 rounded-2xl bg-indigo-500/20 text-cyan-300 font-semibold text-[11px] transition active:scale-95">
+                <span class="text-base leading-none mb-0.5">⚔️</span>
+                <span>สนามประลอง</span>
+            </button>
+            <button id="nav-guide" onclick="switchTab('guide')" class="flex flex-col items-center justify-center py-1.5 rounded-2xl text-slate-400 hover:text-white font-semibold text-[11px] transition active:scale-95">
+                <span class="text-base leading-none mb-0.5">📖</span>
+                <span>คู่มือสกิล</span>
+            </button>
+            <button id="nav-stats" onclick="switchTab('stats')" class="flex flex-col items-center justify-center py-1.5 rounded-2xl text-slate-400 hover:text-white font-semibold text-[11px] transition active:scale-95">
+                <span class="text-base leading-none mb-0.5">🏆</span>
+                <span>สถิติสูงสุด</span>
+            </button>
+        </nav>
+
+        <!-- หน้าต่างแนะนำวิธีติดตั้งแอปลงหน้าจอโฮม (Install Modal) -->
+        <div id="install-modal" class="absolute inset-0 bg-slate-950/85 backdrop-blur-sm z-50 hidden items-center justify-center p-5">
+            <div class="w-full bg-slate-900 border-2 border-cyan-500/40 rounded-3xl p-5 text-center shadow-2xl animate-pop max-h-[85%] overflow-y-auto no-scrollbar">
+                <div class="text-3xl mb-2">📲</div>
+                <h3 class="font-math text-lg font-bold text-white mb-2">ติดตั้งลงเครื่อง & Google Play Store</h3>
+                
+                <div id="native-install-box" class="hidden mb-3">
+                    <button onclick="triggerNativeInstall()" class="w-full py-2.5 rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-600 font-bold text-sm text-white shadow-lg animate-pulse active:scale-95">
+                        ⬇️ กดติดตั้งแอปลงมือถือทันที
+                    </button>
+                </div>
+
+                <div class="text-left text-xs text-slate-300 leading-relaxed space-y-2.5 mb-4 bg-slate-950/70 p-3.5 rounded-2xl border border-slate-800">
+                    <div>
+                        <div class="font-bold text-cyan-300">1. ติดตั้งลงมือถือทันที (PWA):</div>
+                        <p>• <b>Android (Chrome):</b> กดจุด 3 จุดมุมขวาบน ➔ เลือก <b>"ติดตั้งแอป"</b> หรือ <b>"เพิ่มลงในหน้าจอหลัก"</b></p>
+                        <p>• <b>iPhone (Safari):</b> กดปุ่มแชร์ด้านล่าง ➔ เลือก <b>"เพิ่มไปยังหน้าจอโฮม"</b></p>
+                    </div>
+                    <div class="border-t border-slate-800 pt-2">
+                        <div class="font-bold text-emerald-400">2. นำขึ้น Google Play Store (.AAB / .APK):</div>
+                        <p>• บันทึกไฟล์โค้ดนี้เป็น <code>index.html</code> แล้วนำไปโฮสต์ฟรีบน <b>GitHub Pages</b> หรือ <b>Vercel</b></p>
+                        <p>• นำลิงก์เว็บไซต์ไปใส่ในเว็บ <b>PWABuilder.com</b> เพื่อกดสร้างไฟล์แพ็กเกจ <b>Android (.aab)</b> สำหรับอัปโหลดขึ้น Google Play Console ได้เลยครับ</p>
+                    </div>
+                </div>
+                <button onclick="closeInstallModal()" class="w-full py-2.5 rounded-2xl bg-gradient-to-r from-cyan-500 to-indigo-600 font-bold text-sm text-white active:scale-95">
+                    เข้าใจแล้ว!
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= 4. สคริปต์การทำงาน ================= -->
+    <script>
+        // ระบบเตรียมความพร้อม PWA Manifest และปุ่มติดตั้งลงเครื่องอัตโนมัติ (รองรับ PWABuilder -> Google Play Store)
+        let deferredPrompt = null;
+        (function setupPWA() {
+            try {
+                const iconSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><rect width="512" height="512" rx="112" fill="#0f172a"/><circle cx="256" cy="256" r="190" fill="#0284c7" opacity="0.25"/><text x="256" y="305" font-family="sans-serif" font-weight="900" font-size="180" fill="#38bdf8" text-anchor="middle">M3</text></svg>`;
+                const iconUrl = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(iconSvg);
+                const manifest = {
+                    name: 'Math Sprint ม.3',
+                    short_name: 'Math M.3',
+                    description: 'แอปเกมประลองความเร็วคณิตศาสตร์ ม.3 ริมุรุ สุคุนะ โกโจ',
+                    start_url: './',
+                    display: 'standalone',
+                    orientation: 'portrait',
+                    background_color: '#090d16',
+                    theme_color: '#090d16',
+                    icons: [
+                        { src: iconUrl, sizes: '192x192', type: 'image/svg+xml', purpose: 'any maskable' },
+                        { src: iconUrl, sizes: '512x512', type: 'image/svg+xml', purpose: 'any maskable' }
+                    ]
+                };
+                const blob = new Blob([JSON.stringify(manifest)], { type: 'application/manifest+json' });
+                const manifestEl = document.getElementById('pwa-manifest');
+                if (manifestEl) manifestEl.href = URL.createObjectURL(blob);
+            } catch (e) {}
+        })();
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            const installBox = document.getElementById('native-install-box');
+            if (installBox) installBox.classList.remove('hidden');
+        });
+
+        async function triggerNativeInstall() {
+            if (!deferredPrompt) return;
+            deferredPrompt.prompt();
+            await deferredPrompt.userChoice;
+            deferredPrompt = null;
+            const installBox = document.getElementById('native-install-box');
+            if (installBox) installBox.classList.add('hidden');
+            closeInstallModal();
+        }
+
+        let audioCtx = null;
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+        }
+
+        function playSound(type) {
+            try {
+                initAudio();
+                if (!audioCtx) return;
+                const now = audioCtx.currentTime;
+
+                if (type === 'correct') {
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(523.25, now);
+                    osc.frequency.setValueAtTime(659.25, now + 0.08);
+                    gain.gain.setValueAtTime(0.25, now);
+                    gain.gain.linearRampToValueAtTime(0.01, now + 0.22);
+                    osc.start(now);
+                    osc.stop(now + 0.22);
+                } else if (type === 'wrong') {
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(160, now);
+                    osc.frequency.linearRampToValueAtTime(110, now + 0.25);
+                    gain.gain.setValueAtTime(0.25, now);
+                    gain.gain.linearRampToValueAtTime(0.01, now + 0.25);
+                    osc.start(now);
+                    osc.stop(now + 0.25);
+                } else if (type === 'slash') {
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(880, now);
+                    osc.frequency.exponentialRampToValueAtTime(220, now + 0.16);
+                    gain.gain.setValueAtTime(0.22, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.16);
+                    osc.start(now);
+                    osc.stop(now + 0.16);
+                } else if (type === 'world_slash') {
+                    // เสียงฟันดาบคมกริบแบบสมจริง (Realistic sharp blade slash noise) สำหรับท่าผ่าโลกของสุคุนะ
+                    const bufferSize = audioCtx.sampleRate * 0.25;
+                    const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+                    const data = buffer.getChannelData(0);
+                    for (let i = 0; i < bufferSize; i++) {
+                        data[i] = Math.random() * 2 - 1;
+                    }
+                    const noise = audioCtx.createBufferSource();
+                    noise.buffer = buffer;
+
+                    const filter = audioCtx.createBiquadFilter();
+                    filter.type = 'bandpass';
+                    filter.frequency.setValueAtTime(2200, now);
+                    filter.frequency.exponentialRampToValueAtTime(350, now + 0.22);
+                    filter.Q.value = 4.5;
+
+                    const gain = audioCtx.createGain();
+                    gain.gain.setValueAtTime(0.45, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.22);
+
+                    noise.connect(filter);
+                    filter.connect(gain);
+                    gain.connect(audioCtx.destination);
+
+                    noise.start(now);
+                    noise.stop(now + 0.22);
+                } else if (type === 'murasaki') {
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(200, now);
+                    osc.frequency.exponentialRampToValueAtTime(750, now + 0.3);
+                    gain.gain.setValueAtTime(0.35, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.35);
+                    osc.start(now);
+                    osc.stop(now + 0.35);
+                }
+            } catch (e) {}
+        }
+
+        let gameState = 'menu';
+        let currentDifficulty = 'easy';
+        let score = 0;
+        let lives = 3;
+        let combo = 1;
+        let maxCombo = 1;
+        let correctCount = 0;
+        let maxTime = 45;
+        let timeLeft = 45;
+        let timerInterval = null;
+        let isAnswering = false;
+        let floatingTargets = [];
+        let animFrameId = null;
+        let currentQuestion = { text: '', hint: '', answer: 0, choices: [] };
+        let bestScore = 0;
+        let bestCombo = 1;
+        let totalCorrectSession = 0;
+
+        function switchTab(tab) {
+            if (gameState === 'playing') return;
+            const startEl = document.getElementById('start-screen');
+            const guideEl = document.getElementById('guide-screen');
+            const statsEl = document.getElementById('stats-screen');
+            const gameoverEl = document.getElementById('gameover-screen');
+
+            startEl.classList.add('hidden');
+            guideEl.classList.add('hidden');
+            statsEl.classList.add('hidden');
+            gameoverEl.classList.add('hidden');
+
+            ['nav-home', 'nav-guide', 'nav-stats'].forEach(id => {
+                const btn = document.getElementById(id);
+                btn.classList.remove('bg-indigo-500/20', 'text-cyan-300');
+                btn.classList.add('text-slate-400');
+            });
+
+            if (tab === 'home') {
+                startEl.classList.remove('hidden');
+                document.getElementById('nav-home').classList.add('bg-indigo-500/20', 'text-cyan-300');
+                document.getElementById('nav-home').classList.remove('text-slate-400');
+            } else if (tab === 'guide') {
+                guideEl.classList.remove('hidden');
+                document.getElementById('nav-guide').classList.add('bg-indigo-500/20', 'text-cyan-300');
+                document.getElementById('nav-guide').classList.remove('text-slate-400');
+            } else if (tab === 'stats') {
+                document.getElementById('stat-best-score').textContent = bestScore;
+                document.getElementById('stat-best-combo').textContent = 'x' + bestCombo;
+                document.getElementById('stat-total-correct').textContent = totalCorrectSession + ' ข้อ';
+                statsEl.classList.remove('hidden');
+                document.getElementById('nav-stats').classList.add('bg-indigo-500/20', 'text-cyan-300');
+                document.getElementById('nav-stats').classList.remove('text-slate-400');
+            }
+        }
+
+        function openInstallModal() {
+            const modal = document.getElementById('install-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeInstallModal() {
+            const modal = document.getElementById('install-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function startGame(difficulty) {
+            currentDifficulty = difficulty;
+            score = 0;
+            lives = 3;
+            combo = 1;
+            maxCombo = 1;
+            correctCount = 0;
+            isAnswering = false;
+
+            const rimuruSvg = document.getElementById('character-rimuru-svg');
+            const sukunaSvg = document.getElementById('character-sukuna-svg');
+            const gojoSvg = document.getElementById('character-gojo-svg');
+
+            if (difficulty === 'easy') {
+                maxTime = 45;
+                document.getElementById('difficulty-badge').textContent = '🟢 ระดับ: ง่าย (ริมุรุ เทมเพสต์)';
+                document.getElementById('rimuru-blade-tag').textContent = '⚔️ แตะเป้าหมายลอยได้ หรือกด [1-4] เพื่อปล่อยคลื่นดาบริมุรุ';
+                if (rimuruSvg) rimuruSvg.classList.remove('hidden');
+                if (sukunaSvg) sukunaSvg.classList.add('hidden');
+                if (gojoSvg) gojoSvg.classList.add('hidden');
+            } else if (difficulty === 'medium') {
+                maxTime = 50;
+                document.getElementById('difficulty-badge').textContent = '🔥 ระดับ: ปานกลาง (เรียวเมน สุคุนะ)';
+                document.getElementById('rimuru-blade-tag').textContent = '⛩️ แตะเป้าหมายลอยได้ หรือกด [1-4] ให้สุคุนะปล่อย "ท่าผ่าโลก"';
+                if (rimuruSvg) rimuruSvg.classList.add('hidden');
+                if (sukunaSvg) sukunaSvg.classList.remove('hidden');
+                if (gojoSvg) gojoSvg.classList.add('hidden');
+            } else {
+                maxTime = 60;
+                document.getElementById('difficulty-badge').textContent = '🟣 ระดับ: ยาก (โกโจ ซาโตรุ - มุราซากิ)';
+                document.getElementById('rimuru-blade-tag').textContent = '🟣 แตะเป้าหมายลอยได้ หรือกด [1-4] ให้โกโจยิง "มุราซากิ"';
+                if (rimuruSvg) rimuruSvg.classList.add('hidden');
+                if (sukunaSvg) sukunaSvg.classList.add('hidden');
+                if (gojoSvg) gojoSvg.classList.remove('hidden');
+            }
+            timeLeft = maxTime;
+
+            document.getElementById('start-screen').classList.add('hidden');
+            document.getElementById('guide-screen').classList.add('hidden');
+            document.getElementById('stats-screen').classList.add('hidden');
+            document.getElementById('gameover-screen').classList.add('hidden');
+            document.getElementById('app-bottom-nav').classList.add('hidden');
+            document.getElementById('game-screen').classList.remove('hidden');
+            document.getElementById('game-screen').classList.add('flex');
+
+            gameState = 'playing';
+            loadNextQuestion();
+            startTimer();
+        }
+
+        function returnToMenu() {
+            gameState = 'menu';
+            clearInterval(timerInterval);
+            cancelAnimationFrame(animFrameId);
+            document.getElementById('game-screen').classList.add('hidden');
+            document.getElementById('game-screen').classList.remove('flex');
+            document.getElementById('gameover-screen').classList.add('hidden');
+            document.getElementById('app-bottom-nav').classList.remove('hidden');
+            switchTab('home');
+        }
+
+        function startTimer() {
+            clearInterval(timerInterval);
+            updateHUD();
+            timerInterval = setInterval(() => {
+                if (gameState !== 'playing') return;
+                timeLeft--;
+                updateHUD();
+                if (timeLeft <= 0) {
+                    endGame('หมดเวลาแล้ว! ทำได้ยอดเยี่ยมมาก');
+                }
+            }, 1000);
+        }
+
+        function updateHUD() {
+            document.getElementById('score-display').textContent = score;
+            document.getElementById('combo-display').textContent = 'x' + combo;
+            document.getElementById('timer-display').textContent = timeLeft + 's';
+
+            const pct = Math.max(0, Math.min(100, (timeLeft / maxTime) * 100));
+            const timeBar = document.getElementById('time-bar');
+            timeBar.style.width = pct + '%';
+            if (pct <= 25) {
+                timeBar.className = 'h-full bg-rose-500 transition-all duration-300';
+            } else {
+                timeBar.className = 'h-full bg-gradient-to-r from-cyan-400 to-indigo-500 transition-all duration-300';
+            }
+
+            let hearts = '';
+            for (let i = 0; i < 3; i++) {
+                hearts += i < lives ? '❤️ ' : '🖤 ';
+            }
+            document.getElementById('lives-display').textContent = hearts.trim();
+        }
+
+        function generateQuestion(diff) {
+            let qText = '', hint = '', ans = 0;
+
+            if (diff === 'easy') {
+                const type = Math.floor(Math.random() * 4);
+                if (type === 0) {
+                    const a = Math.floor(Math.random() * 30) + 5;
+                    const b = Math.floor(Math.random() * 30) + 5;
+                    qText = `${a} + ${b} = ?`;
+                    hint = 'การบวกจำนวนเต็มบวก';
+                    ans = a + b;
+                } else if (type === 1) {
+                    const a = Math.floor(Math.random() * 40) + 15;
+                    const b = Math.floor(Math.random() * a) + 1;
+                    qText = `${a} - ${b} = ?`;
+                    hint = 'การลบจำนวนเต็มบวก';
+                    ans = a - b;
+                } else if (type === 2) {
+                    const a = Math.floor(Math.random() * 11) + 2;
+                    const b = Math.floor(Math.random() * 11) + 2;
+                    qText = `${a} × ${b} = ?`;
+                    hint = 'การคูณสูตรคูณพื้นฐาน';
+                    ans = a * b;
+                } else {
+                    const ansVal = Math.floor(Math.random() * 10) + 2;
+                    const b = Math.floor(Math.random() * 9) + 2;
+                    const a = ansVal * b;
+                    qText = `${a} ÷ ${b} = ?`;
+                    hint = 'การหารลงตัวพื้นฐาน';
+                    ans = ansVal;
+                }
+            } else if (diff === 'medium') {
+                const type = Math.floor(Math.random() * 4);
+                if (type === 0) {
+                    const a = (Math.floor(Math.random() * 25) + 5) * (Math.random() < 0.5 ? 1 : -1);
+                    const b = (Math.floor(Math.random() * 25) + 5) * -1;
+                    qText = `${a} + (${b}) = ?`;
+                    hint = 'การบวกจำนวนเต็มลบ';
+                    ans = a + b;
+                } else if (type === 1) {
+                    const a = Math.floor(Math.random() * 20) - 10;
+                    const b = (Math.floor(Math.random() * 15) + 2) * -1;
+                    qText = `${a} - (${b}) = ?`;
+                    hint = 'ลบเจอลบกลายเป็นบวก!';
+                    ans = a - b;
+                } else if (type === 2) {
+                    const a = (Math.floor(Math.random() * 11) + 2) * -1;
+                    const b = (Math.floor(Math.random() * 11) + 2) * (Math.random() < 0.5 ? 1 : -1);
+                    qText = `(${a}) × (${b}) = ?`;
+                    hint = 'ระวังเครื่องหมายของผลคูณ';
+                    ans = a * b;
+                } else {
+                    const ansVal = (Math.floor(Math.random() * 11) + 2) * (Math.random() < 0.5 ? 1 : -1);
+                    const b = (Math.floor(Math.random() * 9) + 2) * -1;
+                    const a = ansVal * b;
+                    qText = `(${a}) ÷ (${b}) = ?`;
+                    hint = 'การหารจำนวนเต็มลบ';
+                    ans = ansVal;
+                }
+            } else {
+                const type = Math.floor(Math.random() * 5);
+                if (type === 0) {
+                    const a = Math.floor(Math.random() * 21) - 10;
+                    const b = (Math.floor(Math.random() * 7) + 2) * (Math.random() < 0.5 ? 1 : -1);
+                    const c = Math.floor(Math.random() * 7) + 2;
+                    qText = `${a} + (${b}) × ${c} = ?`;
+                    hint = 'ม.3: ทำคูณ/หาร ก่อน บวก/ลบ';
+                    ans = a + (b * c);
+                } else if (type === 1) {
+                    const squares = [9, 16, 25, 36, 49, 64, 81, 100, 121, 144, 169];
+                    const sq1 = squares[Math.floor(Math.random() * squares.length)];
+                    const sq2 = squares[Math.floor(Math.random() * 6)];
+                    if (Math.random() < 0.5) {
+                        qText = `√${sq1} + √${sq2} = ?`;
+                        hint = 'ม.3: ถอดรากที่สองแล้วนำมาบวกกัน';
+                        ans = Math.sqrt(sq1) + Math.sqrt(sq2);
+                    } else {
+                        qText = `√${sq1} × √${sq2} = ?`;
+                        hint = 'ม.3: สมบัติกรณฑ์ที่สอง';
+                        ans = Math.sqrt(sq1) * Math.sqrt(sq2);
+                    }
+                } else if (type === 2) {
+                    const a = Math.floor(Math.random() * 8) + 4;
+                    const b = Math.floor(Math.random() * (a - 1)) + 1;
+                    qText = `${a}² - ${b}² = ?`;
+                    hint = 'ม.3: ผลต่างกำลังสอง (a-b)(a+b)';
+                    ans = (a * a) - (b * b);
+                } else if (type === 3) {
+                    const qVal = (Math.floor(Math.random() * 8) + 2) * (Math.random() < 0.5 ? 1 : -1);
+                    const b = Math.floor(Math.random() * 6) + 2;
+                    const a = qVal * b;
+                    const c = Math.floor(Math.random() * 15) + 1;
+                    qText = `(${a} ÷ ${b}) - ${c} = ?`;
+                    hint = 'ม.3: คำนวณในวงเล็บก่อน';
+                    ans = qVal - c;
+                } else {
+                    const x = (Math.floor(Math.random() * 11) + 2) * (Math.random() < 0.4 ? -1 : 1);
+                    const a = Math.floor(Math.random() * 4) + 2;
+                    const b = Math.floor(Math.random() * 15) + 1;
+                    const c = (a * x) + b;
+                    qText = `${a}x + ${b} = ${c} , x = ?`;
+                    hint = 'ม.3: แก้สมการหาค่า x ในใจ';
+                    ans = x;
+                }
+            }
+
+            let choices = [ans];
+            while (choices.length < 4) {
+                let offset = (Math.floor(Math.random() * 8) + 1) * (Math.random() < 0.5 ? 1 : -1);
+                if (choices.length === 1 && ans !== 0 && Math.random() < 0.4) {
+                    offset = -2 * ans;
+                }
+                const fake = ans + offset;
+                if (!choices.includes(fake)) {
+                    choices.push(fake);
+                }
+            }
+            choices.sort(() => Math.random() - 0.5);
+
+            return { text: qText, hint: hint, answer: ans, choices: choices };
+        }
+
+        function loadNextQuestion() {
+            isAnswering = false;
+            currentQuestion = generateQuestion(currentDifficulty);
+
+            const qTextEl = document.getElementById('question-text');
+            qTextEl.textContent = currentQuestion.text;
+            qTextEl.classList.remove('animate-pop');
+            void qTextEl.offsetWidth;
+            qTextEl.classList.add('animate-pop');
+
+            document.getElementById('question-hint').textContent = currentQuestion.hint;
+
+            const layer = document.getElementById('floating-targets-layer');
+            const slashLayer = document.getElementById('slash-effects-layer');
+            layer.innerHTML = '';
+            slashLayer.innerHTML = '';
+            floatingTargets = [];
+
+            const arena = document.getElementById('battle-arena');
+            const arenaW = arena.clientWidth || 440;
+            const arenaH = arena.clientHeight || 280;
+            const targetSize = 72;
+            const usableH = arenaH - 72;
+            const slotW = arenaW / 4;
+
+            currentQuestion.choices.forEach((choiceVal, idx) => {
+                const btn = document.createElement('button');
+                btn.className = 'choice-btn absolute flex flex-col items-center justify-center rounded-full bg-gradient-to-br from-slate-800/95 via-indigo-900/90 to-slate-900/95 hover:from-cyan-700 hover:to-indigo-700 border-2 border-cyan-400/60 shadow-[0_0_18px_rgba(56,189,248,0.35)] text-white font-math text-xl sm:text-2xl font-bold transition-transform active:scale-90 cursor-pointer';
+                btn.style.width = targetSize + 'px';
+                btn.style.height = targetSize + 'px';
+                btn.innerHTML = `
+                    <span class="text-[10px] font-sans font-bold text-cyan-300 leading-none mb-0.5">[${idx + 1}]</span>
+                    <span class="choice-val-text leading-none">${choiceVal}</span>
+                `;
+
+                const startX = idx * slotW + Math.max(4, (slotW - targetSize) / 2);
+                const startY = 14 + (idx % 2) * 52 + Math.random() * 24;
+                const speedScale = currentDifficulty === 'hard' ? 1.5 : (currentDifficulty === 'medium' ? 1.15 : 0.85);
+                const vx = (Math.random() < 0.5 ? 1 : -1) * (0.65 + Math.random() * 0.55) * speedScale;
+                const vy = (Math.random() < 0.5 ? 1 : -1) * (0.55 + Math.random() * 0.5) * speedScale;
+
+                btn.style.left = startX + 'px';
+                btn.style.top = startY + 'px';
+
+                btn.onclick = () => handleAnswer(choiceVal, btn);
+                layer.appendChild(btn);
+
+                floatingTargets.push({
+                    el: btn,
+                    x: startX,
+                    y: startY,
+                    vx: vx,
+                    vy: vy,
+                    size: targetSize,
+                    maxX: arenaW - targetSize - 6,
+                    maxY: usableH - targetSize
+                });
+            });
+
+            cancelAnimationFrame(animFrameId);
+            animateFloatingTargets();
+        }
+
+        function animateFloatingTargets() {
+            if (gameState !== 'playing') return;
+
+            if (!isAnswering) {
+                for (let i = 0; i < floatingTargets.length; i++) {
+                    const t = floatingTargets[i];
+                    t.x += t.vx;
+                    t.y += t.vy;
+
+                    if (t.x <= 6) {
+                        t.x = 6;
+                        t.vx = Math.abs(t.vx);
+                    } else if (t.x >= t.maxX) {
+                        t.x = t.maxX;
+                        t.vx = -Math.abs(t.vx);
+                    }
+
+                    if (t.y <= 8) {
+                        t.y = 8;
+                        t.vy = Math.abs(t.vy);
+                    } else if (t.y >= t.maxY) {
+                        t.y = t.maxY;
+                        t.vy = -Math.abs(t.vy);
+                    }
+
+                    t.el.style.left = t.x + 'px';
+                    t.el.style.top = t.y + 'px';
+                }
+            }
+            animFrameId = requestAnimationFrame(animateFloatingTargets);
+        }
+
+        function handleAnswer(selectedVal, btnEl) {
+            if (isAnswering || gameState !== 'playing') return;
+            isAnswering = true;
+
+            const isCorrect = (selectedVal === currentQuestion.answer);
+
+            launchRimuruSlashWave(btnEl, () => {
+                const feedbackEl = document.getElementById('feedback-badge');
+
+                if (isCorrect) {
+                    playSound('correct');
+                    score += 10 * combo;
+                    correctCount++;
+                    combo++;
+                    if (combo > maxCombo) maxCombo = combo;
+                    timeLeft = Math.min(maxTime, timeLeft + 3);
+
+                    feedbackEl.textContent = `+${10 * (combo - 1)} คะแนน! (คอมโบ x${combo - 1})`;
+                    feedbackEl.className = 'absolute top-2 text-xs font-bold px-3 py-0.5 rounded-full bg-emerald-500/90 text-white shadow-lg opacity-100 transition-opacity duration-200';
+
+                    btnEl.classList.remove('border-cyan-400/60');
+                    btnEl.classList.add('border-emerald-400', 'bg-emerald-600/90', 'scale-110');
+                } else {
+                    playSound('wrong');
+                    lives--;
+                    combo = 1;
+
+                    feedbackEl.textContent = `ผิด! คำตอบคือ ${currentQuestion.answer}`;
+                    feedbackEl.className = 'absolute top-2 text-xs font-bold px-3 py-0.5 rounded-full bg-rose-500/90 text-white shadow-lg opacity-100 transition-opacity duration-200';
+
+                    btnEl.classList.remove('border-cyan-400/60');
+                    btnEl.classList.add('border-rose-500', 'bg-rose-900/90', 'animate-shake');
+
+                    const allBtns = document.querySelectorAll('.choice-btn');
+                    allBtns.forEach(b => {
+                        const valText = b.querySelector('.choice-val-text');
+                        if (valText && parseInt(valText.textContent, 10) === currentQuestion.answer) {
+                            b.classList.add('border-emerald-400', 'bg-emerald-700/80', 'scale-105');
+                        }
+                    });
+                }
+
+                updateHUD();
+
+                setTimeout(() => {
+                    feedbackEl.style.opacity = '0';
+                    if (lives <= 0) {
+                        endGame('พลังชีวิตหมดแล้ว!');
+                    } else {
+                        loadNextQuestion();
+                    }
+                }, 650);
+            });
+        }
+
+        function launchRimuruSlashWave(btnEl, onHitCallback) {
+            const isWorldSlash = (currentDifficulty === 'medium');
+            const isGojoMurasaki = (currentDifficulty === 'hard');
+
+            if (isGojoMurasaki) {
+                playSound('murasaki');
+
+                const arena = document.getElementById('battle-arena');
+                const effectsLayer = document.getElementById('slash-effects-layer');
+                const arenaRect = arena.getBoundingClientRect();
+                const btnRect = btnEl.getBoundingClientRect();
+
+                const startX = arenaRect.width / 2;
+                const startY = arenaRect.height - 35;
+                const targetX = (btnRect.left - arenaRect.left) + btnRect.width / 2;
+                const targetY = (btnRect.top - arenaRect.top) + btnRect.height / 2;
+
+                const chargeContainer = document.createElement('div');
+                chargeContainer.className = 'absolute pointer-events-none flex items-center justify-center';
+                chargeContainer.style.left = (startX - 50) + 'px';
+                chargeContainer.style.top = (startY - 40) + 'px';
+                chargeContainer.style.width = '100px';
+                chargeContainer.style.height = '60px';
+                chargeContainer.innerHTML = `
+                    <div id="blue-orb" class="absolute w-6 h-6 rounded-full bg-cyan-400 shadow-[0_0_16px_#38bdf8] transition-all duration-200" style="left: 0px;"></div>
+                    <div id="red-orb" class="absolute w-6 h-6 rounded-full bg-rose-500 shadow-[0_0_16px_#f43f5e] transition-all duration-200" style="right: 0px;"></div>
+                `;
+                effectsLayer.appendChild(chargeContainer);
+
+                setTimeout(() => {
+                    const blue = chargeContainer.querySelector('#blue-orb');
+                    const red = chargeContainer.querySelector('#red-orb');
+                    if (blue && red) {
+                        blue.style.left = '37px';
+                        red.style.right = '37px';
+                    }
+                }, 30);
+
+                setTimeout(() => {
+                    chargeContainer.remove();
+
+                    const murasakiOrb = document.createElement('div');
+                    murasakiOrb.className = 'absolute pointer-events-none';
+                    murasakiOrb.style.left = (startX - 28) + 'px';
+                    murasakiOrb.style.top = (startY - 28) + 'px';
+                    murasakiOrb.style.width = '56px';
+                    murasakiOrb.style.height = '56px';
+                    murasakiOrb.style.transition = 'all 0.22s cubic-bezier(0.2, 0.9, 0.3, 1)';
+                    murasakiOrb.innerHTML = `
+                        <div class="w-full h-full rounded-full bg-gradient-to-r from-purple-500 via-indigo-500 to-violet-600 shadow-[0_0_28px_rgba(168,85,247,1)] flex items-center justify-center border-2 border-purple-200 animate-pulse">
+                            <span class="text-[10px] font-bold text-white tracking-widest">虚式</span>
+                        </div>
+                    `;
+                    effectsLayer.appendChild(murasakiOrb);
+
+                    requestAnimationFrame(() => {
+                        murasakiOrb.style.left = (targetX - 28) + 'px';
+                        murasakiOrb.style.top = (targetY - 28) + 'px';
+                        murasakiOrb.style.transform = 'scale(1.35)';
+                    });
+
+                    arena.classList.remove('animate-shake');
+                    void arena.offsetWidth;
+                    arena.classList.add('animate-shake');
+
+                    setTimeout(() => {
+                        murasakiOrb.remove();
+
+                        const hitExplode = document.createElement('div');
+                        hitExplode.className = 'absolute pointer-events-none animate-slash';
+                        hitExplode.style.left = (targetX - 60) + 'px';
+                        hitExplode.style.top = (targetY - 60) + 'px';
+                        hitExplode.style.width = '120px';
+                        hitExplode.style.height = '120px';
+                        hitExplode.innerHTML = `
+                            <svg class="w-full h-full drop-shadow-[0_0_22px_rgba(168,85,247,1)]" viewBox="0 0 120 120" fill="none">
+                                <circle cx="60" cy="60" r="54" fill="#a855f7" opacity="0.35"/>
+                                <circle cx="60" cy="60" r="38" stroke="#e9d5ff" stroke-width="4"/>
+                                <text x="60" y="38" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="extrabold">🟣 มุราซากิ</text>
+                            </svg>
+                        `;
+                        effectsLayer.appendChild(hitExplode);
+                        setTimeout(() => hitExplode.remove(), 380);
+
+                        if (onHitCallback) onHitCallback();
+                    }, 225);
+                }, 160);
+                return;
+            }
+
+            playSound(isWorldSlash ? 'world_slash' : 'slash');
+
+            const arena = document.getElementById('battle-arena');
+            const effectsLayer = document.getElementById('slash-effects-layer');
+            const swordWrap = document.getElementById('rimuru-sword-wrap');
+
+            const arenaRect = arena.getBoundingClientRect();
+            const btnRect = btnEl.getBoundingClientRect();
+
+            const startX = arenaRect.width / 2;
+            const startY = arenaRect.height - 32;
+
+            const targetX = (btnRect.left - arenaRect.left) + btnRect.width / 2;
+            const targetY = (btnRect.top - arenaRect.top) + btnRect.height / 2;
+
+            const dx = targetX - startX;
+            const dy = targetY - startY;
+            const angleDeg = Math.atan2(dy, dx) * (180 / Math.PI) + 90;
+
+            if (swordWrap) {
+                swordWrap.style.transform = `translateY(-12px) rotate(${(angleDeg * 0.45)}deg) scale(1.18)`;
+                setTimeout(() => {
+                    swordWrap.style.transform = 'translateY(0) rotate(0deg) scale(1)';
+                }, 200);
+            }
+
+            if (isWorldSlash) {
+                const slashAngle = (Math.atan2(dy, dx) * 180 / Math.PI) - 25;
+
+                const flash = document.createElement('div');
+                flash.className = 'absolute inset-0 bg-rose-950/60 pointer-events-none transition-opacity duration-200';
+                effectsLayer.appendChild(flash);
+                setTimeout(() => { flash.style.opacity = '0'; }, 60);
+                setTimeout(() => flash.remove(), 220);
+
+                const worldCut = document.createElement('div');
+                worldCut.className = 'absolute pointer-events-none';
+                worldCut.style.left = (targetX - 300) + 'px';
+                worldCut.style.top = (targetY - 14) + 'px';
+                worldCut.style.width = '600px';
+                worldCut.style.height = '28px';
+                worldCut.style.transform = `rotate(${slashAngle}deg) scaleX(0.1)`;
+                worldCut.style.transition = 'transform 0.14s cubic-bezier(0.1, 0.9, 0.2, 1), opacity 0.22s ease-out';
+                worldCut.innerHTML = `
+                    <svg class="w-full h-full drop-shadow-[0_0_16px_rgba(225,29,72,1)]" viewBox="0 0 600 28" fill="none">
+                        <polygon points="0,14 300,2 600,14 300,26" fill="#090d16" stroke="#ef4444" stroke-width="2"/>
+                        <line x1="20" y1="14" x2="580" y2="14" stroke="#ffffff" stroke-width="3"/>
+                        <line x1="80" y1="9" x2="520" y2="9" stroke="#f43f5e" stroke-width="1.5" stroke-dasharray="14 8"/>
+                        <line x1="80" y1="19" x2="520" y2="19" stroke="#f43f5e" stroke-width="1.5" stroke-dasharray="14 8"/>
+                    </svg>
+                `;
+                effectsLayer.appendChild(worldCut);
+
+                requestAnimationFrame(() => {
+                    worldCut.style.transform = `rotate(${slashAngle}deg) scaleX(1)`;
+                });
+
+                arena.classList.remove('animate-shake');
+                void arena.offsetWidth;
+                arena.classList.add('animate-shake');
+
+                setTimeout(() => {
+                    worldCut.style.opacity = '0';
+                    setTimeout(() => worldCut.remove(), 220);
+
+                    const hitSlash = document.createElement('div');
+                    hitSlash.className = 'absolute pointer-events-none animate-slash';
+                    hitSlash.style.left = (targetX - 55) + 'px';
+                    hitSlash.style.top = (targetY - 55) + 'px';
+                    hitSlash.style.width = '110px';
+                    hitSlash.style.height = '110px';
+                    hitSlash.innerHTML = `
+                        <svg class="w-full h-full drop-shadow-[0_0_12px_rgba(239,68,68,0.95)]" viewBox="0 0 110 110" fill="none">
+                            <path d="M8 102 L102 8" stroke="#090d16" stroke-width="9" stroke-linecap="round"/>
+                            <path d="M8 102 L102 8" stroke="#ef4444" stroke-width="4" stroke-linecap="round"/>
+                            <path d="M14 96 L96 14" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round"/>
+                            <text x="55" y="24" text-anchor="middle" fill="#fda4af" font-size="11" font-weight="bold">解 • ผ่าโลก</text>
+                        </svg>
+                    `;
+                    effectsLayer.appendChild(hitSlash);
+                    setTimeout(() => hitSlash.remove(), 380);
+
+                    if (onHitCallback) onHitCallback();
+                }, 155);
+                return;
+            }
+
+            const wave = document.createElement('div');
+            wave.className = 'absolute pointer-events-none';
+            wave.style.left = (startX - 42) + 'px';
+            wave.style.top = (startY - 24) + 'px';
+            wave.style.width = '84px';
+            wave.style.height = '48px';
+            wave.style.transform = `rotate(${angleDeg}deg) scale(0.5)`;
+            wave.style.transition = 'transform 0.16s cubic-bezier(0.2, 0.9, 0.3, 1), left 0.16s linear, top 0.16s linear';
+            wave.innerHTML = `
+                <svg class="w-full h-full drop-shadow-[0_0_12px_rgba(56,189,248,0.95)]" viewBox="0 0 100 56" fill="none">
+                    <path d="M6 48 Q50 -4 94 48 Q50 18 6 48 Z" fill="#38bdf8" stroke="#e0f2fe" stroke-width="2"/>
+                    <path d="M16 44 Q50 8 84 44" stroke="#a855f7" stroke-width="3.5" stroke-linecap="round"/>
+                    <path d="M26 38 L50 14 L74 38" stroke="#0f172a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            `;
+            effectsLayer.appendChild(wave);
+
+            requestAnimationFrame(() => {
+                wave.style.left = (targetX - 42) + 'px';
+                wave.style.top = (targetY - 24) + 'px';
+                wave.style.transform = `rotate(${angleDeg}deg) scale(1.25)`;
+            });
+
+            setTimeout(() => {
+                wave.remove();
+
+                const hitSlash = document.createElement('div');
+                hitSlash.className = 'absolute pointer-events-none animate-slash';
+                hitSlash.style.left = (targetX - 45) + 'px';
+                hitSlash.style.top = (targetY - 45) + 'px';
+                hitSlash.style.width = '90px';
+                hitSlash.style.height = '90px';
+                hitSlash.innerHTML = `
+                    <svg class="w-full h-full" viewBox="0 0 90 90" fill="none">
+                        <path d="M12 78 L78 12" stroke="#e0f2fe" stroke-width="4" stroke-linecap="round"/>
+                        <path d="M16 18 L74 72" stroke="#38bdf8" stroke-width="3" stroke-linecap="round"/>
+                    </svg>
+                `;
+                effectsLayer.appendChild(hitSlash);
+                setTimeout(() => hitSlash.remove(), 350);
+
+                if (onHitCallback) onHitCallback();
+            }, 165);
+        }
+
+        window.addEventListener('keydown', (e) => {
+            if (gameState !== 'playing' || isAnswering) return;
+            const key = e.key;
+            if (['1', '2', '3', '4'].includes(key)) {
+                const idx = parseInt(key, 10) - 1;
+                const btns = document.querySelectorAll('.choice-btn');
+                if (btns[idx]) {
+                    btns[idx].click();
+                }
+            }
+        });
+
+        function endGame(reasonText) {
+            gameState = 'gameover';
+            clearInterval(timerInterval);
+            cancelAnimationFrame(animFrameId);
+
+            document.getElementById('game-screen').classList.add('hidden');
+            document.getElementById('game-screen').classList.remove('flex');
+            document.getElementById('gameover-screen').classList.remove('hidden');
+            document.getElementById('app-bottom-nav').classList.remove('hidden');
+
+            if (score > bestScore) bestScore = score;
+            if (maxCombo > bestCombo) bestCombo = maxCombo;
+            totalCorrectSession += correctCount;
+
+            document.getElementById('gameover-reason').textContent = reasonText;
+            document.getElementById('final-score').textContent = score;
+            document.getElementById('final-correct').textContent = correctCount + ' ข้อ';
+            document.getElementById('final-max-combo').textContent = 'x' + maxCombo;
+
+            const diffMap = {
+                easy: '🟢 ง่าย (Easy)',
+                medium: '🟡 ปานกลาง (Medium)',
+                hard: '🔥 ยาก (โหมด ม.3)'
+            };
+            document.getElementById('final-difficulty').textContent = diffMap[currentDifficulty];
+        }
+
+        function restartSameDifficulty() {
+            startGame(currentDifficulty);
+        }
+    </script>
+</body>
+</html>
