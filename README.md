@@ -1,2 +1,0 @@
-# zaman4
-Dddd
